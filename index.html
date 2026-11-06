@@ -87,7 +87,7 @@ textarea,input[type=text].tx{width:100%;font:inherit;padding:7px 10px;border:1px
 .fcb{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.cds{font-weight:800;font-variant-numeric:tabular-nums;color:var(--org);font-size:1.1rem}
 .wt{background:#eef1fb;border:1px solid #d9def0;border-radius:999px;padding:0 9px;font-size:.82rem;font-weight:700;white-space:nowrap}
 ol.stp{padding-left:20px}ol.stp li{margin:8px 0}ol.stp .out{font-size:.86rem;color:#0a6b4f;margin-left:22px}
-.blk.dn{background:#f1fbf6;border-color:#9bdcbc}.labhost{margin-top:8px}
+.blk.dn{background:#f1fbf6;border-color:#9bdcbc}.labhost{margin-top:8px}.ggt,.ggb{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}.ggt .on{background:var(--pri,#2b5cff);color:#fff}.ggl{text-decoration:none;display:inline-block;padding:8px 14px;border:1.5px solid #3b4ec8;border-radius:10px;font-size:14px;color:#3b4ec8}.ggf iframe{width:100%;height:560px;border:2px solid #cfd6ff;border-radius:12px;background:#fff}.ggr{display:flex;gap:10px;align-items:flex-start;justify-content:space-between;border-bottom:1px solid #e5e8f5;padding:8px 0}.ggr pre{margin:4px 0;background:#f3f5ff;padding:6px 8px;border-radius:8px;white-space:pre-wrap;font-size:13px}.ggw{margin-top:8px}
 @media print{header,nav,.noprint{display:none!important}.pg{display:block!important}}
 </style>
 </head>
@@ -150,13 +150,13 @@ const ENC=[
   {w:'👥',m:5,a:'Crie um cubo: digite os pontos <code class="cp">A=(0,0,0)</code> e <code class="cp">B=(30,0,0)</code> e use a ferramenta <b>Cubo</b> clicando em A e B. Se não achar a ferramenta, digite “cubo” na entrada e escolha a sugestão.',o:'Cubo de aresta 30 construído'},
   {w:'👥',m:5,a:'Ative a RA com o cubo na tela e <b>caminhe em volta dele</b>. Tire um print. <b>Se não funcionou:</b> chame o professor e use o plano B (GeoGebra 3D no computador).',o:'Print da RA (ou do plano B)'},
   {w:'👥',m:5,a:'Preencha a linha do seu grupo no quadro <b>“Compatibilidade”</b> abaixo (modelo e se a RA funcionou).',o:'Quadro preenchido'},
-  {w:'👤',m:5,a:'Individual: escreva uma frase sobre o que você <b>percebeu no cubo</b> em RA que não perceberia numa figura da prova.',o:'Uma frase escrita'}],lab:'compat',p:'Nem todo smartphone é compatível com a RA do GeoGebra. Deixe o plano B (computador ou projetor) pronto.'},
+  {w:'👤',m:5,a:'Individual: escreva uma frase sobre o que você <b>percebeu no cubo</b> em RA que não perceberia numa figura da prova.',o:'Uma frase escrita'}],lab:['compat','gg'],p:'Nem todo smartphone é compatível com a RA do GeoGebra. Deixe o plano B (computador ou projetor) pronto.'},
  {t:'115–145',m:30,h:'Medir o cubo no app (todos fazendo)',goal:'Conferir o volume com o app e com a conta',steps:[
   {w:'👥',m:5,a:'No app, use a ferramenta/comando <b>Volume</b> no cubo de aresta 30. Se o nome for diferente, digite “volume” e escolha a sugestão. Anote o resultado.',o:'Volume anotado (esperado 27 000)'},
   {w:'👥',m:5,a:'Crie um segundo cubo de aresta 10 no mesmo canto: pontos <code class="cp">C=(0,0,0)</code> e <code class="cp">D=(10,0,0)</code> e a ferramenta Cubo. Meça o volume (esperado 1 000).',o:'Cubo pequeno e seu volume'},
   {w:'👤',m:8,a:'No papel, sem o app: calcule <b>27 000 − 8 × 1 000</b> e a massa com 0,5 g/cm³. Compare com o colega ao lado.',o:'Conta no papel: volume e massa'},
   {w:'👥',m:5,a:'Responda por escrito na Ficha (campo 9): <b>o app subtraiu os cubos pra você?</b> Quem fez a decisão de “tirar 8 cantos”?',o:'Resposta escrita'},
-  {w:'👥',m:7,a:'Escolham <b>1 questão do bloco do grupo</b> no Mapa das questões e escrevam o número na Ficha (campo 2).',o:'Questão escolhida na Ficha'}]},
+  {w:'👥',m:7,a:'Escolham <b>1 questão do bloco do grupo</b> no Mapa das questões e escrevam o número na Ficha (campo 2).',o:'Questão escolhida na Ficha'}],lab:'gg'},
  {t:'145–150',m:5,h:'Tarefa para o próximo encontro',goal:'Chegar ao Encontro 2 com a solução do papel',steps:[
   {w:'👤',m:3,a:'Resolva <b>agora</b> a questão escolhida no papel, até onde der. Fotografe sua folha.',o:'Foto da solução no papel'},
   {w:'👥',m:2,a:'Redator: combine com o grupo quem leva a solução completa ao Encontro 2 e anote na Ficha.',o:'Responsável combinado'}]}]},
@@ -171,7 +171,7 @@ const ENC=[
   {w:'👤',m:3,a:'Responda por escrito: <b>por que a massa final é 9,5 kg?</b> Mostre a conta.',o:'Conta de 3 linhas'},
   {w:'👥',m:8,a:'No app, construa o cubo de aresta 30 e o cubo de aresta 10 no canto. Ative a <b>RA</b> e compare o tamanho dos dois sobre a mesa.',o:'Print dos dois cubos em RA'},
   {w:'👥',m:8,a:'Q12: meçam <b>uma caixa real</b> com a régua, digitem as medidas na <b>calculadora de tinta</b> abaixo e anotem a área em cm².',o:'Área da caixa real anotada'},
-  {w:'👤',m:8,a:'Na calculadora, use as medidas da questão 12 e anote: <b>tinta exata, latas exatas e latas a comprar</b>. Explique por que arredonda para cima.',o:'3 números e 1 explicação'}],lab:['cube','tinta']},
+  {w:'👤',m:8,a:'Na calculadora, use as medidas da questão 12 e anote: <b>tinta exata, latas exatas e latas a comprar</b>. Explique por que arredonda para cima.',o:'3 números e 1 explicação'}],lab:['gg','cube','tinta']},
  {t:'45–105',m:60,h:'Oficina nos grupos',goal:'Ficha completa com a questão refeita no aplicativo',steps:[
   {w:'👥',m:5,a:'<b>Conferente</b> lê a solução do papel em voz alta; <b>Redator</b> copia em 2 ou 3 linhas na Ficha (campo 4).',o:'Campo 4 da Ficha'},
   {w:'👥',m:5,a:'No <b>Mapa das questões</b>, abra a sua questão e leia “Ferramenta sugerida”. Escrevam a ferramenta escolhida na Ficha (campo 5).',o:'Campo 5 da Ficha'},
@@ -179,7 +179,7 @@ const ENC=[
   {w:'👥',m:5,a:'Compare: <b>o resultado foi igual ao do papel?</b> Escrevam nos campos 7 e 8 (estratégia e resultado).',o:'Campos 7 e 8'},
   {w:'👤',m:5,a:'Cada integrante escreve, sozinho, <b>1 ajuda</b> e <b>1 limite</b> que percebeu. Depois juntem e escolham os melhores (campos 9 e 10, mínimo 2 ajudas e 1 limite).',o:'Campos 9 e 10'},
   {w:'👥',m:5,a:'Escrevam a recomendação: <b>em que tipo de questão usaríamos? E em qual não?</b> (campo 11)',o:'Campo 11'},
-  {w:'👥',m:10,a:'Se a ferramenta <b>não ajudou</b>, escrevam por quê e testem uma segunda ferramenta (planilha, gráfico, simulação). Isso também conta como resultado.',o:'Segunda tentativa registrada'}]},
+  {w:'👥',m:10,a:'Se a ferramenta <b>não ajudou</b>, escrevam por quê e testem uma segunda ferramenta (planilha, gráfico, simulação). Isso também conta como resultado.',o:'Segunda tentativa registrada'}],lab:'gg'},
  {t:'105–140',m:35,h:'Montar a apresentação',goal:'3 slides prontos e ensaiados',steps:[
   {w:'👥',m:3,a:'Abram o programa de slides do grupo e criem 3 slides em branco.',o:'3 slides criados'},
   {w:'👥',m:8,a:'<b>Slide 1:</b> foto da solução no papel + a estratégia em 2 linhas.',o:'Slide 1 pronto'},
@@ -358,6 +358,36 @@ $('#fclear').onclick=()=>{if(confirm('Apagar a ficha deste grupo?')){store.set('
 /* ============ LABORATÓRIOS ============ */
 const L={};
 // ---- Q11 cubo 3D + Q12 tinta
+
+L.gg=()=>{
+ const d=document.createElement('div');d.className='card lab';
+ const P={
+  '3d':{u:'https://www.geogebra.org/3d?embed',t:'GeoGebra 3D',c:[
+   ['Cubo de aresta 30 (Q11)','Prism(Polygon((0,0,0),(30,0,0),(30,30,0),(0,30,0)),30)','Se der erro, use a ferramenta Cubo clicando em dois pontos.'],
+   ['Cubo de aresta 10 no canto','Prism(Polygon((0,0,0),(10,0,0),(10,10,0),(0,10,0)),10)','Troque o ponto de partida para pôr os outros cantos, por exemplo (20,0,0).'],
+   ['Caixa com medidas variáveis (Q12)','a=20\nb=15\nc=10\nPrism(Polygon((0,0,0),(a,0,0),(a,b,0),(0,b,0)),c)','Mude a, b e c nos controles e use as medidas da sua caixa real.'],
+   ['Área da superfície da caixa','2(a b+a c+b c)','Digite na entrada. Compare com a sua conta no papel.']]},
+  '2d':{u:'https://www.geogebra.org/classic?embed',t:'GeoGebra Gráficos e Geometria',c:[
+   ['Arranjo 7 × 7 de discos (Q1)','Sequence(Sequence(Circle((7 i,7 j),3.5),i,0,6),j,0,6)','Escala em 15 cm de diâmetro por 1 unidade. Ajuste para o seu caso.'],
+   ['Gráfico de função (Q3)','T(s)=20+160*2^(-0.2 s)','Depois calcule T(20) digitando T(20) na entrada.'],
+   ['Retas de um sistema (Q10)','5x+7y=610\nx+y=100','Use a ferramenta Interseção para achar o ponto.']]}};
+ d.innerHTML=`<h3>🧭 GeoGebra aqui na página (sem trocar de aba)</h3>
+ <p class="small">Clique em abrir, siga o painel “Agora faça” e use os comandos prontos. Precisa de internet. Se a janela não carregar, use o botão “Abrir em outra aba”.</p>
+ <div class="ggt"><button class="sec on" data-k="3d">🧊 3D (cubo, caixa)</button><button class="sec" data-k="2d">📈 2D (gráficos, retas)</button></div>
+ <div class="ggb"><button class="btn" data-a="open">▶ Abrir GeoGebra aqui</button><button class="sec" data-a="fs">⛶ Tela cheia</button><a class="sec ggl" target="_blank" rel="noopener">↗ Abrir em outra aba</a><button class="sec" data-a="x">✕ Fechar</button></div>
+ <div class="ggf"></div><div class="ggc"></div>
+ <p class="small ggw">Os nomes de comandos e botões podem mudar conforme a versão e o idioma do GeoGebra. Se um comando der erro, anote o erro e use a ferramenta equivalente.</p>`;
+ let k='3d';const fr=d.querySelector('.ggf'),cm=d.querySelector('.ggc'),lk=d.querySelector('.ggl');
+ const cmds=()=>{cm.innerHTML='<b>Comandos prontos</b> (clique em copiar e cole na entrada do GeoGebra com Ctrl+V):'+P[k].c.map((c,i)=>`<div class="ggr"><div><b>${c[0]}</b><pre>${c[1]}</pre><span class="small">${c[2]}</span></div><button class="sec" data-i="${i}">📋 copiar</button></div>`).join('');lk.href=P[k].u.replace('?embed','');};
+ cmds();
+ const open=()=>{fr.innerHTML=`<iframe src="${P[k].u}" title="${P[k].t}" allow="fullscreen" loading="lazy"></iframe>`;addXP('gg_open',3);};
+ d.querySelectorAll('.ggt button').forEach(b=>b.onclick=()=>{k=b.dataset.k;d.querySelectorAll('.ggt button').forEach(x=>x.classList.toggle('on',x===b));cmds();if(fr.firstChild)open();});
+ d.querySelector('[data-a=open]').onclick=open;
+ d.querySelector('[data-a=x]').onclick=()=>fr.innerHTML='';
+ d.querySelector('[data-a=fs]').onclick=()=>{if(!fr.firstChild)open();const f=fr.firstChild;(f.requestFullscreen||f.webkitRequestFullscreen||(()=>{}))?.call(f);};
+ cm.onclick=ev=>{const b=ev.target.closest('button[data-i]');if(!b)return;const t=P[k].c[+b.dataset.i][1];const done=()=>{b.textContent='✔ copiado';setTimeout(()=>b.textContent='📋 copiar',1500);};
+  if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(done,()=>{window.prompt('Copie (Ctrl+C):',t);});else window.prompt('Copie (Ctrl+C):',t);};
+ return d;};
 L.cube=()=>{
  const d=document.createElement('div');d.className='card lab';
  d.innerHTML=`<h3>🧊 Simulador da questão 11: gire o sólido e retire os cantos</h3>
