@@ -79,6 +79,15 @@ textarea,input[type=text].tx{width:100%;font:inherit;padding:7px 10px;border:1px
 .fich label{display:block;font-weight:600;margin-top:10px}
 .sc{display:flex;gap:8px;align-items:center;border:1px solid var(--line);border-radius:10px;padding:6px 10px;margin:5px 0;background:#fff}
 .sc .ty{background:#eef1fb;border-radius:8px;padding:1px 8px;font-size:.85rem;font-weight:600}
+
+.focus{position:sticky;top:58px;z-index:20;background:linear-gradient(135deg,#fff7e6,#fff);border:2px solid var(--org);border-radius:16px;padding:12px 18px;margin:10px 0;box-shadow:0 8px 24px rgba(232,113,10,.18)}
+.focus.fin{border-color:var(--grn);background:#e6f8ef}
+.fct{font-weight:800;color:var(--org);letter-spacing:.4px;font-size:.88rem;display:flex;gap:10px;flex-wrap:wrap}.fct span{color:var(--mut);font-weight:600}.fct .fcn{margin-left:auto}
+.fca{font-size:1.18rem;line-height:1.5;margin:6px 0}.fco{font-size:.93rem;color:#0a6b4f;margin-bottom:8px}
+.fcb{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.cds{font-weight:800;font-variant-numeric:tabular-nums;color:var(--org);font-size:1.1rem}
+.wt{background:#eef1fb;border:1px solid #d9def0;border-radius:999px;padding:0 9px;font-size:.82rem;font-weight:700;white-space:nowrap}
+ol.stp{padding-left:20px}ol.stp li{margin:8px 0}ol.stp .out{font-size:.86rem;color:#0a6b4f;margin-left:22px}
+.blk.dn{background:#f1fbf6;border-color:#9bdcbc}.labhost{margin-top:8px}
 @media print{header,nav,.noprint{display:none!important}.pg{display:block!important}}
 </style>
 </head>
@@ -122,34 +131,119 @@ $('#swp').onclick=()=>{const on=document.body.classList.toggle('pf');$('#swp').t
 function pg(html){const s=document.createElement('section');s.className='pg'+($('#main').children.length?'':' on');s.innerHTML=html;$('#main').appendChild(s);return s;}
 
 /* ============ dados dos encontros ============ */
+const QD='https://quickdraw.withgoogle.com',EXP='https://experiments.withgoogle.com';
 const ENC=[
 {n:1,t:'Do projeto do Provão ao olhar crítico',blocks:[
- {t:'0–15',m:15,h:'Abertura',d:'Pergunta na lousa: <b>“Se a prova permitisse o celular, vocês resolveriam do mesmo jeito?”</b> Anote palpites. Retomada dos combinados do projeto.',c:['Palpites anotados na lousa']},
- {t:'15–90',m:75,h:'Apresentações dos grupos do Provão',d:'15 min por grupo: slides com <b>os temas abordados</b> e <b>os tópicos a relembrar</b>, e a resolução na lousa, passo a passo.',c:GL(true),p:'Se as apresentações já aconteceram, use este bloco para revisão: cada grupo refaz no papel a questão escolhida e a explica em 5 min.'},
- {t:'90–120',m:30,h:'Instalar e testar o app de RA',d:'Instale a <b>Calculadora GeoGebra 3D</b> no celular e abra o botão de RA. Anote quais aparelhos da turma funcionam.',c:['App instalado','Permissão de câmera dada','Botão de RA apareceu','Plano B combinado (computador ou projetor)'],p:'Nem todo smartphone é compatível com a RA do GeoGebra; teste antes e deixe o plano B pronto.'},
- {t:'120–145',m:25,h:'Demonstração e três perguntas',d:'O professor mostra o sólido da <b>questão 11</b> no GeoGebra 3D (girando e em RA). Em seguida, as 3 perguntas do mês aparecem nos cartões do Início.',c:['Vi o sólido girando','Anotei as 3 perguntas']},
- {t:'145–150',m:5,h:'Tarefa para o próximo encontro',d:'Escolham <b>1 questão do bloco do grupo</b> (veja o Mapa das questões) e tragam a <b>solução feita no papel</b>.',c:['Questão escolhida']}]},
+ {t:'0–10',m:10,h:'Comece fazendo',goal:'Palpite escrito e papéis definidos',steps:[
+  {w:'👤',m:3,a:'Em uma folha, escreva seu palpite: <b>“Se a prova permitisse o celular, eu resolveria do mesmo jeito? Por quê?”</b>',o:'Palpite escrito na folha'},
+  {w:'👥',m:2,a:'Troque a folha com a dupla. Leia o palpite dela e escreva <b>uma pergunta</b> embaixo.',o:'Uma pergunta no palpite da dupla'},
+  {w:'👥',m:5,a:'No grupo, distribuam os papéis: <b>Operador</b> (mexe no app), <b>Conferente</b> (confere no papel), <b>Redator</b> (preenche a Ficha) e <b>Relator</b> (fala nas apresentações). Abram a aba <b>Ficha do grupo</b> e escrevam os papéis no campo Integrantes.',o:'Papéis escritos na Ficha'}]},
+ {t:'10–85',m:75,h:'Apresentações do Provão (plateia ativa)',goal:'Quem apresenta resolve; quem assiste também resolve e anota',steps:[
+  {w:'👥',m:5,a:'<b>Grupo que apresenta:</b> mostre os slides com os <b>temas</b> da questão e os <b>tópicos a relembrar</b>.',o:'Slides apresentados'},
+  {w:'👥',m:8,a:'<b>Grupo que apresenta:</b> resolva na lousa, passo a passo. O Conferente escreve, o Relator explica cada passo.',o:'Questão resolvida na lousa'},
+  {w:'👤',m:8,a:'<b>Plateia:</b> resolva a <b>mesma questão</b> na sua folha enquanto o grupo explica. Marque com um X o passo em que você travou.',o:'Questão resolvida na sua folha'},
+  {w:'👤',m:2,a:'<b>Plateia:</b> preencha a linha do grupo no quadro <b>“Plateia ativa”</b> abaixo: 1 tópico para relembrar e 1 dúvida.',o:'Linha do quadro preenchida'},
+  {w:'🏫',m:15,a:'Repita este ciclo de 15 minutos para cada grupo: <b>${GL}</b>',o:'5 apresentações feitas'}],lab:'p1',p:'Se as apresentações já aconteceram, use este bloco para revisão: cada grupo refaz no papel a questão escolhida e a resolve na lousa em 8 min, enquanto a plateia resolve na folha.'},
+ {t:'85–115',m:30,h:'Instalar e testar a RA (todos mexendo)',goal:'Cada grupo sabe se tem aparelho com RA',steps:[
+  {w:'👥',m:5,a:'<b>Operador:</b> instale o app <b>Calculadora GeoGebra 3D</b> na loja do celular (Android ou iOS). Os outros: pesquisem no navegador “GeoGebra Calculadora 3D RA” e leiam a descrição.',o:'App instalado'},
+  {w:'👥',m:5,a:'Abra o app, <b>permita a câmera</b> e toque no <b>ícone de RA</b>. Aponte a câmera para a mesa.',o:'Tela da câmera aberta'},
+  {w:'👥',m:5,a:'Crie um cubo: digite os pontos <code class="cp">A=(0,0,0)</code> e <code class="cp">B=(30,0,0)</code> e use a ferramenta <b>Cubo</b> clicando em A e B. Se não achar a ferramenta, digite “cubo” na entrada e escolha a sugestão.',o:'Cubo de aresta 30 construído'},
+  {w:'👥',m:5,a:'Ative a RA com o cubo na tela e <b>caminhe em volta dele</b>. Tire um print. <b>Se não funcionou:</b> chame o professor e use o plano B (GeoGebra 3D no computador).',o:'Print da RA (ou do plano B)'},
+  {w:'👥',m:5,a:'Preencha a linha do seu grupo no quadro <b>“Compatibilidade”</b> abaixo (modelo e se a RA funcionou).',o:'Quadro preenchido'},
+  {w:'👤',m:5,a:'Individual: escreva uma frase sobre o que você <b>percebeu no cubo</b> em RA que não perceberia numa figura da prova.',o:'Uma frase escrita'}],lab:'compat',p:'Nem todo smartphone é compatível com a RA do GeoGebra. Deixe o plano B (computador ou projetor) pronto.'},
+ {t:'115–145',m:30,h:'Medir o cubo no app (todos fazendo)',goal:'Conferir o volume com o app e com a conta',steps:[
+  {w:'👥',m:5,a:'No app, use a ferramenta/comando <b>Volume</b> no cubo de aresta 30. Se o nome for diferente, digite “volume” e escolha a sugestão. Anote o resultado.',o:'Volume anotado (esperado 27 000)'},
+  {w:'👥',m:5,a:'Crie um segundo cubo de aresta 10 no mesmo canto: pontos <code class="cp">C=(0,0,0)</code> e <code class="cp">D=(10,0,0)</code> e a ferramenta Cubo. Meça o volume (esperado 1 000).',o:'Cubo pequeno e seu volume'},
+  {w:'👤',m:8,a:'No papel, sem o app: calcule <b>27 000 − 8 × 1 000</b> e a massa com 0,5 g/cm³. Compare com o colega ao lado.',o:'Conta no papel: volume e massa'},
+  {w:'👥',m:5,a:'Responda por escrito na Ficha (campo 9): <b>o app subtraiu os cubos pra você?</b> Quem fez a decisão de “tirar 8 cantos”?',o:'Resposta escrita'},
+  {w:'👥',m:7,a:'Escolham <b>1 questão do bloco do grupo</b> no Mapa das questões e escrevam o número na Ficha (campo 2).',o:'Questão escolhida na Ficha'}]},
+ {t:'145–150',m:5,h:'Tarefa para o próximo encontro',goal:'Chegar ao Encontro 2 com a solução do papel',steps:[
+  {w:'👤',m:3,a:'Resolva <b>agora</b> a questão escolhida no papel, até onde der. Fotografe sua folha.',o:'Foto da solução no papel'},
+  {w:'👥',m:2,a:'Redator: combine com o grupo quem leva a solução completa ao Encontro 2 e anote na Ficha.',o:'Responsável combinado'}]}]},
 {n:2,t:'Oficina de RA/RV nas questões',blocks:[
- {t:'0–15',m:15,h:'Retomada',d:'As três perguntas: <i>o que a ferramenta fez por mim? o que eu precisei decidir? onde ela falhou ou me enganou?</i> Confirme a questão do grupo.',c:['Questão confirmada']},
- {t:'15–45',m:30,h:'Prática comum: o sólido da Q11',d:'Todos usam o simulador 3D desta página e depois constroem o sólido no GeoGebra 3D e veem em RA: cubo de 30 cm sem 8 cubos de 10 cm. Conferir o <b>volume</b>.',c:['Construí o sólido','Vi em RA (ou no computador)','Conferi 19 000 cm³'],lab:'cube'},
- {t:'45–105',m:60,h:'Oficina nos grupos',d:'(a) Recorde a solução do papel em 2–3 linhas. (b) Refaça no aplicativo. (c) Preencha a <b>Ficha do grupo</b>.',c:['Papel anotado','Refiz no aplicativo','Ficha preenchida'],p:'Ao circular, faça perguntas em vez de dar respostas: “o que você precisou digitar ou medir?”, “a figura deu o resultado ou só ajudou a enxergar?”.'},
- {t:'105–140',m:35,h:'Preparar a apresentação',d:'De 3 a 4 slides ou um vídeo curto de tela: questão, papel, aplicativo, <b>mesma estratégia?</b>, o que ajudou, limite.',c:['Slides ou vídeo de tela prontos']},
- {t:'140–150',m:10,h:'Fechamento e sorteio',d:'Sorteio da ordem das apresentações do próximo encontro.',c:['Ordem definida'],lab:'sorteio'}]},
+ {t:'0–10',m:10,h:'Comece fazendo',goal:'Grupo pronto para trabalhar',steps:[
+  {w:'👥',m:3,a:'Abra a <b>Ficha do grupo</b>, escolha o seu grupo e confira os integrantes e os papéis.',o:'Ficha aberta e conferida'},
+  {w:'👤',m:4,a:'Cada um escreve em 1 linha: <b>como vou resolver a questão do grupo no papel</b>.',o:'Plano de 1 linha por pessoa'},
+  {w:'👥',m:3,a:'<b>Operador:</b> abra o app (ou o GeoGebra no computador). <b>Conferente:</b> abra a foto da solução do papel.',o:'App e papel abertos'}]},
+ {t:'10–45',m:35,h:'Sólido da Q11 e tinta da Q12 (todos fazendo)',goal:'Conferir as questões espaciais com simulador, app e régua',steps:[
+  {w:'👤',m:3,a:'Abra o <b>simulador do sólido</b> abaixo e arraste para girar o cubo.',o:'Sólido girado'},
+  {w:'👤',m:5,a:'Mova o controle <b>Cantos retirados</b> para 0, 4 e 8. Anote no caderno o número de cubos e o volume em cada posição.',o:'Tabela de 3 linhas no caderno'},
+  {w:'👤',m:3,a:'Responda por escrito: <b>por que a massa final é 9,5 kg?</b> Mostre a conta.',o:'Conta de 3 linhas'},
+  {w:'👥',m:8,a:'No app, construa o cubo de aresta 30 e o cubo de aresta 10 no canto. Ative a <b>RA</b> e compare o tamanho dos dois sobre a mesa.',o:'Print dos dois cubos em RA'},
+  {w:'👥',m:8,a:'Q12: meçam <b>uma caixa real</b> com a régua, digitem as medidas na <b>calculadora de tinta</b> abaixo e anotem a área em cm².',o:'Área da caixa real anotada'},
+  {w:'👤',m:8,a:'Na calculadora, use as medidas da questão 12 e anote: <b>tinta exata, latas exatas e latas a comprar</b>. Explique por que arredonda para cima.',o:'3 números e 1 explicação'}],lab:['cube','tinta']},
+ {t:'45–105',m:60,h:'Oficina nos grupos',goal:'Ficha completa com a questão refeita no aplicativo',steps:[
+  {w:'👥',m:5,a:'<b>Conferente</b> lê a solução do papel em voz alta; <b>Redator</b> copia em 2 ou 3 linhas na Ficha (campo 4).',o:'Campo 4 da Ficha'},
+  {w:'👥',m:5,a:'No <b>Mapa das questões</b>, abra a sua questão e leia “Ferramenta sugerida”. Escrevam a ferramenta escolhida na Ficha (campo 5).',o:'Campo 5 da Ficha'},
+  {w:'👥',m:25,a:'<b>Operador</b> refaz a questão no aplicativo; <b>Relator</b> narra cada passo em voz alta; <b>Redator</b> anota os passos (campo 6). Tire um print por passo importante.',o:'Campo 6 e prints'},
+  {w:'👥',m:5,a:'Compare: <b>o resultado foi igual ao do papel?</b> Escrevam nos campos 7 e 8 (estratégia e resultado).',o:'Campos 7 e 8'},
+  {w:'👤',m:5,a:'Cada integrante escreve, sozinho, <b>1 ajuda</b> e <b>1 limite</b> que percebeu. Depois juntem e escolham os melhores (campos 9 e 10, mínimo 2 ajudas e 1 limite).',o:'Campos 9 e 10'},
+  {w:'👥',m:5,a:'Escrevam a recomendação: <b>em que tipo de questão usaríamos? E em qual não?</b> (campo 11)',o:'Campo 11'},
+  {w:'👥',m:10,a:'Se a ferramenta <b>não ajudou</b>, escrevam por quê e testem uma segunda ferramenta (planilha, gráfico, simulação). Isso também conta como resultado.',o:'Segunda tentativa registrada'}]},
+ {t:'105–140',m:35,h:'Montar a apresentação',goal:'3 slides prontos e ensaiados',steps:[
+  {w:'👥',m:3,a:'Abram o programa de slides do grupo e criem 3 slides em branco.',o:'3 slides criados'},
+  {w:'👥',m:8,a:'<b>Slide 1:</b> foto da solução no papel + a estratégia em 2 linhas.',o:'Slide 1 pronto'},
+  {w:'👥',m:8,a:'<b>Slide 2:</b> prints do aplicativo + os passos principais.',o:'Slide 2 pronto'},
+  {w:'👥',m:8,a:'<b>Slide 3:</b> “a estratégia foi igual?”, <b>2 ajudas</b> e <b>1 limite</b>.',o:'Slide 3 pronto'},
+  {w:'👥',m:8,a:'<b>Ensaio cronometrado de 6 minutos</b> (use o cronômetro do painel). O Relator fala; os outros 3 marcam onde passou do tempo.',o:'Ensaio feito'}]},
+ {t:'140–150',m:10,h:'Sorteio e ensaio final',goal:'Ordem de apresentação definida',steps:[
+  {w:'🏫',m:2,a:'Clique em <b>Sortear</b> abaixo e anote a ordem do seu grupo.',o:'Ordem anotada'},
+  {w:'👥',m:4,a:'Redator: copie o texto da Ficha (botão <b>Copiar texto</b>) e salve em um arquivo seguro do grupo.',o:'Ficha salva'},
+  {w:'👥',m:4,a:'Releiam a frase final do slide 3 em voz alta, em coro, uma vez.',o:'Frase final ensaiada'}],lab:'sorteio'}]},
 {n:3,t:'Seminário de RA/RV e ponte para IA',blocks:[
- {t:'0–10',m:10,h:'Aquecimento',d:'Um grupo diz, em uma frase, o que mais o surpreendeu na oficina.',c:[]},
- {t:'10–60',m:50,h:'Mini-apresentações',d:'8 min por grupo: mostra a tela, diz se a estratégia foi a mesma, aponta <b>uma vantagem</b> e <b>um limite</b>. A turma faz 1 pergunta.',c:GL(false)},
- {t:'60–90',m:30,h:'Síntese: ajuda × limita',d:'Jogue <b>“Ajuda ou limita?”</b> abaixo e, em seguida, montem na lousa o <b>guia de uso crítico</b> da turma com 5 critérios.',c:['Guia com 5 critérios escrito'],lab:'game'},
- {t:'90–125',m:35,h:'IA: Experimentos com Google e Quick, Draw!',d:'Em duplas: explorem os sites (20 min) e depois testem o <b>laboratório de IA</b> desta página (k-vizinhos). Discussão em 3 perguntas.',c:['Joguei Quick, Draw!','Treinei o classificador','Discuti as 3 perguntas'],lab:'knn'},
- {t:'125–145',m:20,h:'Lançamento do vídeo',d:'Grupos, tema (IA, Robótica ou os dois), elementos obrigatórios e prazo. Veja o <b>planejador de vídeo</b> no Encontro 4.',c:['Grupos e temas definidos']},
- {t:'145–150',m:5,h:'Bilhete de saída',d:'Complete: <b>“A ferramenta ___ ajuda em ___, mas não substitui ___.”</b>',c:['Bilhete escrito'],lab:'ticket'}]},
+ {t:'0–10',m:10,h:'Comece fazendo',goal:'Todos em ação desde o primeiro minuto',steps:[
+  {w:'👤',m:3,a:'Em 1 frase escrita: <b>“o que a ferramenta fez por mim na oficina?”</b>',o:'1 frase escrita'},
+  {w:'👤',m:3,a:'Em outra frase: <b>“o que eu precisei decidir sozinho(a)?”</b>',o:'1 frase escrita'},
+  {w:'👥',m:4,a:'Grupo: abram os 3 slides e o app e façam um <b>teste de projeção</b> rápido (tela, som, internet).',o:'Teste feito'}]},
+ {t:'10–60',m:50,h:'Mini-apresentações (plateia ativa)',goal:'Quem apresenta mostra; quem assiste avalia',steps:[
+  {w:'👥',m:6,a:'<b>Grupo que apresenta:</b> mostre os 3 slides: questão no papel, aplicativo, comparação.',o:'3 slides apresentados'},
+  {w:'👤',m:6,a:'<b>Plateia:</b> durante a fala, preencha a linha do grupo no quadro <b>“Plateia ativa”</b>: estratégia (mesma, parecida, diferente), 1 ajuda e 1 limite citados.',o:'Linha preenchida'},
+  {w:'👤',m:2,a:'<b>Plateia:</b> escreva 1 pergunta e faça ao grupo; o grupo responde em 1 minuto.',o:'1 pergunta feita'},
+  {w:'🏫',m:8,a:'Repita este ciclo de 8 minutos para cada grupo: <b>${GL0}</b>',o:'5 apresentações feitas'}],lab:'p3'},
+ {t:'60–90',m:30,h:'Montar o guia de uso crítico',goal:'5 critérios escritos pela turma',steps:[
+  {w:'👤',m:6,a:'Jogue <b>“Ajuda ou limita?”</b> abaixo e anote seu placar.',o:'Placar anotado'},
+  {w:'👥',m:6,a:'Grupo: olhem o quadro <b>Plateia ativa</b> e escolham as <b>2 ajudas</b> e os <b>2 limites</b> mais citados.',o:'4 itens escolhidos'},
+  {w:'👥',m:8,a:'Escrevam <b>1 critério</b> em forma de pergunta (“Antes de usar RA/RV, eu devo perguntar…”) no quadro <b>Guia da turma</b> abaixo.',o:'Critério escrito'},
+  {w:'🏫',m:10,a:'Leiam os critérios dos outros grupos e <b>votem nos 5 melhores</b> levantando a mão (cada grupo tem 3 votos).',o:'Guia com 5 critérios'}],lab:['game','guia']},
+ {t:'90–125',m:35,h:'IA na prática',goal:'Testar uma IA de verdade e olhar como ela decide',steps:[
+  {w:'👤',m:7,a:`Abra o <b><a href="${QD}" target="_blank" rel="noopener">Quick, Draw!</a></b> e faça os 6 desenhos. Anote quantos a IA acertou.`,o:'Placar do jogo'},
+  {w:'👤',m:3,a:'Anote <b>1 desenho que a IA errou</b> e por que você acha que errou.',o:'Hipótese anotada'},
+  {w:'👥',m:7,a:`Abra o <b><a href="${EXP}" target="_blank" rel="noopener">Experimentos com Google</a></b>, escolha 1 experimento e teste.`,o:'1 experimento testado'},
+  {w:'👤',m:8,a:'No <b>Laboratório de IA</b> abaixo: clique em <b>Carregar exemplo</b>, depois em <b>Testar ponto misterioso</b> 3 vezes. Anote os votos.',o:'3 resultados anotados'},
+  {w:'👤',m:5,a:'Mude <b>k</b> de 3 para 1 e depois para 9 e teste de novo. Anote: <b>o que mudou na fronteira?</b>',o:'Observação escrita'},
+  {w:'👥',m:5,a:'Grupo: respondam por escrito as 3 perguntas do quadro azul do laboratório (1 pessoa por pergunta).',o:'3 respostas escritas'}],lab:'knn'},
+ {t:'125–145',m:20,h:'Lançar o vídeo (comece já)',goal:'Tema, divisão de tarefas e 1ª cena',steps:[
+  {w:'👥',m:3,a:'Escolham o tema: <b>IA</b>, <b>Robótica</b> ou os dois.',o:'Tema escolhido'},
+  {w:'👥',m:4,a:'Dividam: cada pessoa pesquisa <b>1 item</b> (definição de IA, definição de Robótica, curiosidades, aplicações reais).',o:'Tarefas divididas'},
+  {w:'👤',m:8,a:'Pesquise seu item em <b>1 fonte confiável</b> e anote em 2 linhas com o link.',o:'2 linhas e link'},
+  {w:'👥',m:5,a:'Abram o <b>Planejador do vídeo</b> (Encontro 4, no fim da página) e adicionem as <b>2 primeiras cenas</b>.',o:'2 cenas no planejador'}]},
+ {t:'145–150',m:5,h:'Bilhete de saída',goal:'Registrar em 1 frase',steps:[
+  {w:'👤',m:5,a:'Preencha o <b>bilhete de saída</b> abaixo e clique em Registrar.',o:'Bilhete registrado'}],lab:'ticket'}]},
 {n:4,t:'IA e Robótica: produção e exibição do vídeo',blocks:[
- {t:'0–20',m:20,h:'Sessão de vídeos de Arduino e robótica',d:'Assistam aos vídeos do PTD e leiam os critérios do vídeo (planejador abaixo).',c:['Vi os vídeos','Li os critérios']},
- {t:'20–60',m:40,h:'Roteiro e storyboard',d:'Definição, curiosidades, aplicações, limite e fontes. Use o <b>planejador de vídeo</b>.',c:['Roteiro com todos os elementos obrigatórios'],lab:'video'},
- {t:'60–115',m:55,h:'Gravação e edição',d:'Gravação com o celular; edição simples.',c:['Cenas gravadas','Edição iniciada']},
- {t:'115–140',m:25,h:'Exibição de prévias e feedback',d:'Cada grupo mostra a prévia e recebe 1 elogio e 1 sugestão.',c:['Prévia exibida','Feedback anotado']},
- {t:'140–150',m:10,h:'Prazo do vídeo final',d:'Um vídeo não se faz em um encontro só: <b>prazo sugerido de 1 semana</b>.',c:['Prazo anotado'],p:'Rubrica do vídeo (10 pts): conteúdo correto 3 · curiosidades e aplicações 2 · olhar crítico (limite ou risco) 2 · roteiro e clareza 2 · fontes 1.'}]}
+ {t:'0–20',m:20,h:'Veja fazendo e anote',goal:'Ideias de linguagem de vídeo',steps:[
+  {w:'👤',m:10,a:'Assista ao vídeo de Arduino/robótica do PTD. Anote <b>3 recursos</b> de que gostou (cena, texto na tela, trilha, ritmo).',o:'3 recursos anotados'},
+  {w:'👤',m:3,a:'Escreva a <b>frase de abertura</b> (gancho de 10 segundos) do seu vídeo.',o:'Gancho escrito'},
+  {w:'👥',m:7,a:'Grupo: leiam o quadro de critérios do vídeo, escolham o <b>melhor gancho</b> e escrevam na 1ª cena do planejador.',o:'Gancho escolhido'}],p:'Rubrica do vídeo (10 pts): conteúdo correto 3 · curiosidades e aplicações 2 · olhar crítico (limite ou risco) 2 · roteiro e clareza 2 · fontes 1.'},
+ {t:'20–60',m:40,h:'Roteiro e storyboard',goal:'Roteiro completo com todos os elementos',steps:[
+  {w:'👥',m:10,a:'No <b>Planejador do vídeo</b>, adicionem cenas até todos os selos ficarem ✔.',o:'Todos os selos ✔'},
+  {w:'👤',m:10,a:'Cada pessoa escreve a <b>fala de 1 cena</b> (3 a 4 frases) no caderno.',o:'1 fala escrita por pessoa'},
+  {w:'👤',m:8,a:'Leia sua fala em voz alta com cronômetro e <b>ajuste a duração</b> da cena no planejador.',o:'Duração ajustada'},
+  {w:'👥',m:7,a:'Confiram: total entre <b>2:00 e 4:00</b>. Corte o que passar. Clique em <b>Copiar roteiro</b> e salve.',o:'Roteiro salvo'},
+  {w:'👥',m:5,a:'Listem os materiais de cada cena (celular, tela, objeto, Arduino) e quem traz.',o:'Lista de materiais'}],lab:'video'},
+ {t:'60–115',m:55,h:'Gravar e editar',goal:'Rascunho do vídeo pronto',steps:[
+  {w:'👥',m:5,a:'Montem o cenário e testem o som com uma gravação de 5 segundos.',o:'Teste de som feito'},
+  {w:'👥',m:30,a:'Gravem as cenas <b>na ordem do roteiro</b>: 1 grava (celular na horizontal), 1 apresenta, 1 confere o roteiro e 1 marca o tempo.',o:'Cenas gravadas'},
+  {w:'👥',m:15,a:'Juntem as cenas no aplicativo de edição do celular ou do computador e adicionem <b>textos na tela</b> com as definições.',o:'Edição básica feita'},
+  {w:'👥',m:5,a:'Exportem uma <b>prévia</b> e confiram o som.',o:'Prévia exportada'}]},
+ {t:'115–140',m:25,h:'Prévias com feedback ativo',goal:'1 elogio e 1 sugestão por grupo',steps:[
+  {w:'👥',m:3,a:'<b>Grupo que mostra:</b> exiba a prévia (até 2 min).',o:'Prévia exibida'},
+  {w:'👤',m:2,a:'<b>Plateia:</b> preencha a linha do grupo no quadro <b>“Feedback”</b> abaixo: 1 elogio e 1 sugestão.',o:'Linha preenchida'},
+  {w:'🏫',m:5,a:'Repita este ciclo de 5 minutos para cada grupo: <b>${GL0}</b>',o:'5 prévias vistas'}],lab:'p4'},
+ {t:'140–150',m:10,h:'Prazo e entrega',goal:'Cada um sabe o que falta e até quando',steps:[
+  {w:'👥',m:4,a:'Leiam o feedback recebido e escrevam <b>3 ajustes</b> que faremos.',o:'3 ajustes escritos'},
+  {w:'👥',m:3,a:'Definam: <b>quem exporta e envia</b> o vídeo final, <b>em que formato</b> e <b>para onde</b>. Combinem com o professor o prazo (sugestão: 1 semana).',o:'Responsável, formato e prazo'},
+  {w:'👤',m:3,a:'Cada um escreve na Ficha uma tarefa pendente com o seu nome.',o:'Tarefa com nome'}]}]}
 ];
-
 /* ============ dados das questões ============ */
 const Q=[
 [1,'Sofia','Chapa quadrada de 100 cm com 49 discos de 150 cm²: área que sobra','Geometria plana: áreas','GeoGebra 2D (arranjo 7 × 7)','n','A conta direta é mais rápida; o app só ajuda a visualizar o arranjo.','(A) 2 650 cm²','100 × 100 = 10 000; 49 × 150 = 7 350; 10 000 − 7 350.'],
@@ -182,39 +276,54 @@ pg(`<h2>Bem-vindo(a)! Seu desafio do mês</h2>
 <div class="fl"><div><div class="f">1 · O que a ferramenta fez por mim?</div><div class="b">Calculou? Desenhou? Girou o objeto? Escreva o que ela fez e o que continuou sendo trabalho seu.</div></div></div>
 <div class="fl"><div><div class="f">2 · O que eu precisei decidir?</div><div class="b">Que medidas digitar, qual figura construir, como interpretar e arredondar o resultado. A ferramenta não decide por você.</div></div></div>
 <div class="fl"><div><div class="f">3 · Onde ela falhou ou me enganou?</div><div class="b">Aparelho sem RA, medida digitada errada, resposta bonita, mas errada, ou questão que nem pedia esse recurso.</div></div></div></div></div>
-<div class="grid2"><div class="card"><h3>Como usar esta página</h3><ul><li>Cada encontro tem blocos de tempo com <b>caixinhas para marcar</b>.</li><li>Os laboratórios (sólido 3D, calculadora de tinta, IA, vídeo) estão nos encontros.</li><li>A <b>Ficha do grupo</b> salva sozinha neste navegador.</li><li>Ganhe XP acertando e concluindo.</li></ul></div>
+<div class="grid2"><div class="card"><h3>Como usar esta página</h3><ul><li>Em cada encontro, siga o painel laranja <b>“AGORA FAÇA”</b>: ele mostra o passo da vez. Cumpriu? Clique em <b>Feito</b>.</li><li>Nunca há tempo parado: quando o grupo não está apresentando, você está <b>resolvendo, anotando ou avaliando</b>.</li><li>Os laboratórios (sólido 3D, calculadora de tinta, IA, vídeo) estão nos encontros.</li><li>A <b>Ficha do grupo</b> salva sozinha neste navegador.</li><li>Ganhe XP acertando e concluindo.</li></ul></div>
 <div class="card"><h3>Combinados</h3><ul><li>Resolver no papel <b>antes</b> de usar o aplicativo.</li><li>Dizer sempre: a estratégia foi a mesma, parecida ou diferente?</li><li>Apontar <b>pelo menos 2 ajudas e 1 limite</b>.</li><li>Dizer “aqui não vale usar RA/RV” também é resultado.</li></ul></div></div>
 <div class="profbox prof"><b>Modo professor ligado.</b> Você vê cronômetros nos blocos, o gabarito no Mapa das questões e as rubricas. Desligue o modo antes de projetar para a turma.</div>`);
 
 // ENCONTROS
+const WT={'👤':'individual','👥':'grupo','🏫':'turma'};
+const GLS=GL(true).join(' → '),GLS0=GL(false).join(' → ');
+function fix(t){return t.replace('${GL}',GLS).replace('${GL0}',GLS0);}
 ENC.forEach(e=>{
- const s=pg(`<h2>Encontro ${e.n} · ${e.t}</h2><p class="meta">150 minutos (3 aulas de 50 juntas). Marque os blocos conforme avançam.</p>
- <div class="card"><div class="pbar"><i id="pb${e.n}"></i></div><span class="small" id="pt${e.n}">0 de ${e.blocks.length} blocos</span></div>
- <div id="bl${e.n}"></div><div id="labs${e.n}"></div>`);
+ e.flat=[];e.blocks.forEach((b,bi)=>b.steps.forEach((st,si)=>e.flat.push({bi,si,b,st,id:`e${e.n}_${bi}_${si}`})));
+ pg(`<h2>Encontro ${e.n} · ${e.t}</h2><p class="meta">150 minutos. Aqui você <b>sempre tem algo para fazer</b>: siga o painel “Agora faça”.</p>
+ <div class="focus" id="fc${e.n}"></div>
+ <div class="card"><div class="pbar"><i id="pb${e.n}"></i></div><span class="small" id="pt${e.n}"></span></div><div id="bl${e.n}"></div>`);
  const box=$('#bl'+e.n);
- e.blocks.forEach((b,i)=>{
-  const id=`e${e.n}b${i}`,saved=store.get(id,[]);
-  const d=document.createElement('details');d.className='blk';d.open=i===0;
-  d.innerHTML=`<summary><span class="tm">${b.t} min</span><b>${b.h}</b><span class="cd prof" data-m="${b.m}"></span><label class="dn" onclick="event.stopPropagation()"><input type="checkbox"> feito</label></summary>
-  <div class="bd"><p>${b.d}</p>${b.c.length?'<div>'+b.c.map((c,k)=>`<label style="display:block"><input type="checkbox" data-k="${k}" ${saved.includes(k)?'checked':''}> ${c}</label>`).join('')+'</div>':''}
-  ${b.p?`<div class="profbox prof">${b.p}</div>`:''}<button class="sec prof" data-t="${b.m}">⏱ iniciar ${b.m} min</button></div>`;
+ e.blocks.forEach((b,bi)=>{
+  const d=document.createElement('details');d.className='blk';d.id=`blk${e.n}_${bi}`;
+  d.innerHTML=`<summary><span class="tm">${b.t} min</span><b>${b.h}</b><span class="small" style="margin-left:auto" data-c></span><span class="cd prof"></span></summary>
+  <div class="bd"><p class="small"><b>Objetivo:</b> ${b.goal}</p><ol class="stp">${b.steps.map((st,si)=>`<li><label><input type="checkbox" data-id="e${e.n}_${bi}_${si}"> <span class="wt">${st.w}</span> ${fix(st.a)} <span class="small">· ${st.m} min</span></label><div class="out">Produto: ${st.o}</div></li>`).join('')}</ol>
+  ${b.p?`<div class="profbox prof">${b.p}</div>`:''}<button class="sec prof" data-m="${b.m}">⏱ iniciar ${b.m} min</button><div class="labhost"></div></div>`;
   box.appendChild(d);
-  const upd=()=>{const all=$$('input[data-k]',d),on=all.filter(x=>x.checked).map(x=>+x.dataset.k);store.set(id,on);
-   const fin=$('summary input',d).checked;d.classList.toggle('dn',fin);store.set(id+'f',fin);prog(e);};
-  $('summary input',d).checked=store.get(id+'f',false);d.classList.toggle('dn',$('summary input',d).checked);
-  d.addEventListener('change',upd);
-  // timer
-  const tb=$('button[data-t]',d),cd=$('.cd',d);let iv=null,left=0;
+  const tb=$('button[data-m]',d),cd=$('.cd',d);let iv=null,left=0;
   tb.onclick=()=>{clearInterval(iv);left=b.m*60;const tick=()=>{cd.textContent=`${String(Math.floor(left/60)).padStart(2,'0')}:${String(left%60).padStart(2,'0')}`;if(left--<=0){clearInterval(iv);cd.textContent='⏰ tempo!';}};tick();iv=setInterval(tick,1000);};
  });
- prog(e);
+ $('#bl'+e.n).addEventListener('change',ev=>{const c=ev.target.closest('input[data-id]');if(!c)return;const st=store.get('st'+e.n,{});st[c.dataset.id]=c.checked;store.set('st'+e.n,st);render(e);});
+ render(e);
 });
-function prog(e){const n=e.blocks.filter((b,i)=>store.get(`e${e.n}b${i}f`,false)).length;
- $('#pb'+e.n).style.width=n/e.blocks.length*100+'%';$('#pt'+e.n).textContent=`${n} de ${e.blocks.length} blocos`;
- const r=$('.rd[data-e="'+e.n+'"] .pb i');if(r)r.style.width=n/e.blocks.length*100+'%';if(n===e.blocks.length)addXP('enc'+e.n,20);}
+let fcTimer=null;
+function render(e){
+ const st=store.get('st'+e.n,{});
+ e.flat.forEach(f=>{const c=$(`input[data-id="${f.id}"]`);if(c)c.checked=!!st[f.id];});
+ const done=e.flat.filter(f=>st[f.id]).length,N=e.flat.length;
+ $('#pb'+e.n).style.width=done/N*100+'%';$('#pt'+e.n).textContent=`${done} de ${N} passos feitos`;
+ const rr=$('.rd[data-e="'+e.n+'"] .pb i');if(rr)rr.style.width=done/N*100+'%';
+ e.blocks.forEach((b,bi)=>{const n=e.flat.filter(f=>f.bi===bi&&st[f.id]).length,d=$('#blk'+e.n+'_'+bi);$('[data-c]',d).textContent=n+'/'+b.steps.length;d.classList.toggle('dn',n===b.steps.length);});
+ const cur=e.flat.find(f=>!st[f.id]),fc=$('#fc'+e.n);
+ if(!cur){fc.className='focus fin';fc.innerHTML='<h3>🏆 Encontro concluído!</h3><p>Todos os passos feitos. Salve a Ficha e siga para o próximo encontro.</p>';addXP('enc'+e.n,25);return;}
+ fc.className='focus';const k=e.flat.indexOf(cur)+1;
+ fc.innerHTML=`<div class="fct">AGORA FAÇA · <span>${cur.b.t} min · ${cur.b.h}</span><span class="fcn">Passo ${k} de ${N}</span></div>
+ <div class="fca"><span class="wt">${cur.st.w} ${WT[cur.st.w]}</span> ${fix(cur.st.a)}</div><div class="fco">✔ Produto: ${cur.st.o}</div>
+ <div class="fcb"><button class="btn" data-a="ok">✔ Feito, próximo passo</button><button class="sec" data-a="back">◀ Voltar</button><button class="sec" data-a="t">⏱ ${cur.st.m} min</button><span class="cds"></span></div>`;
+ const d=$('#blk'+e.n+'_'+cur.bi);if(d&&!d.open){$$('#bl'+e.n+' details').forEach(x=>x.open=false);d.open=true;}
+ $('[data-a=ok]',fc).onclick=()=>{st[cur.id]=true;store.set('st'+e.n,st);addXP('p'+cur.id,2);render(e);};
+ $('[data-a=back]',fc).onclick=()=>{const prev=e.flat[k-2];if(prev){st[prev.id]=false;store.set('st'+e.n,st);render(e);}};
+ $('[data-a=t]',fc).onclick=()=>{clearInterval(fcTimer);let left=cur.st.m*60;const out=$('.cds',fc);const tick=()=>{if(!out.isConnected){clearInterval(fcTimer);return;}out.textContent=String(Math.floor(left/60)).padStart(2,'0')+':'+String(left%60).padStart(2,'0');if(left--<=0){clearInterval(fcTimer);out.textContent='⏰ tempo!';}};tick();fcTimer=setInterval(tick,1000);};
+}
 $('#road').innerHTML=ENC.map(e=>`<div class="rd" data-e="${e.n}"><span class="n">ENCONTRO ${e.n}</span><b>${e.t}</b><div class="pb"><i></i></div></div>`).join('');
 $('#road').addEventListener('click',ev=>{const r=ev.target.closest('.rd');if(r)go(+r.dataset.e);});
-ENC.forEach(prog);
+ENC.forEach(render);
 $$('.fl').forEach(f=>f.onclick=()=>f.classList.toggle('on'));
 
 // MAPA
@@ -374,7 +483,19 @@ L.video=()=>{const d=document.createElement('div');d.className='card';
   if(navigator.clipboard)navigator.clipboard.writeText(t).then(ok,ok);else ok();};
  render();return d;};
 
-ENC.forEach(e=>{const host=$('#labs'+e.n);e.blocks.forEach(b=>{if(b.lab){host.appendChild(L[b.lab]());if(b.lab==='cube')host.appendChild(L.tinta());}});});
+function mkTab(key,title,desc,cols,need){return()=>{const d=document.createElement('div');d.className='card';
+ d.innerHTML=`<h3>${title}</h3><p class="small">${desc}</p><div style="overflow:auto"><table><tr><th>Grupo</th>${cols.map(c=>`<th>${c.l}</th>`).join('')}</tr>${TM.g.map((g,i)=>`<tr><td><b>${i+1}</b> <span class="small">${short(g)}</span></td>${cols.map(c=>`<td>${c.o?`<select data-g="${i}" data-k="${c.k}">${c.o.map(x=>`<option>${x}</option>`).join('')}</select>`:`<input class="tx" data-g="${i}" data-k="${c.k}">`}</td>`).join('')}</tr>`).join('')}</table></div><div class="small" id="cnt"></div>`;
+ const sv=store.get(key,{});$$('[data-g]',d).forEach(x=>{x.value=sv[x.dataset.g+x.dataset.k]||(x.tagName==='SELECT'?x.options[0].value:'');});
+ const upd=()=>{const o={};$$('[data-g]',d).forEach(x=>o[x.dataset.g+x.dataset.k]=x.value);store.set(key,o);
+  const rows=TM.g.filter((_,i)=>cols.every(c=>{const v=o[i+c.k];return v&&v.trim()&&(!c.o||v!==c.o[0]);})).length;
+  $('#cnt',d).textContent=rows+' de '+TM.g.length+' linhas completas';if(rows>=need)addXP(key,15);};
+ d.addEventListener('input',upd);d.addEventListener('change',upd);upd();return d;};}
+L.p1=mkTab('p1','👀 Plateia ativa: um tópico e uma dúvida por grupo','Preencha a linha do grupo que acabou de apresentar.',[{k:'t',l:'1 tópico para relembrar'},{k:'d',l:'1 dúvida ou passo em que travei'}],4);
+L.p3=mkTab('p3','👀 Plateia ativa: compare as apresentações','Estratégia, 1 ajuda e 1 limite citados por cada grupo.',[{k:'e',l:'Estratégia',o:['(escolha)','Mesma','Parecida','Diferente']},{k:'a',l:'1 ajuda citada'},{k:'l',l:'1 limite citado'}],4);
+L.p4=mkTab('p4','💬 Feedback das prévias','1 elogio e 1 sugestão para cada vídeo.',[{k:'e',l:'1 elogio'},{k:'s',l:'1 sugestão'}],4);
+L.compat=mkTab('compat','📱 Compatibilidade com RA','Cada grupo registra o aparelho testado e o resultado.',[{k:'m',l:'Modelo do celular'},{k:'r',l:'RA funcionou?',o:['(escolha)','Sim','Não','Parcial']}],5);
+L.guia=mkTab('guia','📝 Guia de uso crítico da turma','Cada grupo escreve 1 critério em forma de pergunta.',[{k:'c',l:'Antes de usar RA/RV, pergunte…'}],4);
+ENC.forEach(e=>e.blocks.forEach((b,bi)=>{const host=$('#blk'+e.n+'_'+bi+' .labhost');[].concat(b.lab||[]).forEach(n=>host.appendChild(L[n]()));}));
 
 $('#turmaCard').innerHTML=`<h3>👥 ${TM.nome}: seus grupos e questões</h3><p class="small">Troque a turma no topo da página. Cada grupo cuida de um bloco de questões do Provão.</p>
 <table><tr><th>Grupo</th><th>Integrantes</th><th>Questões</th></tr>${TM.g.map((g,i)=>`<tr><td><b>${i+1}</b></td><td>${g.join(', ')}</td><td>Q${BL[i][0]} a Q${BL[i][1]}</td></tr>`).join('')}</table>`;
