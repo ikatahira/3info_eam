@@ -10,9 +10,11 @@
 body{margin:0;font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink)}
 header{background:linear-gradient(135deg,#14246b,#2f5bea 60%,#6d4cf0);color:#fff;padding:22px 18px}
 .w{max-width:1100px;margin:0 auto}
+header .sw:first-of-type{margin-left:auto}
+header .sw option{color:#111}
 header .w{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
 header h1{margin:0;font-size:1.6rem}header p{margin:2px 0 0;opacity:.92}
-header .sw{margin-left:auto;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:6px 14px;cursor:pointer;color:#fff;font:inherit}
+header .sw{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:6px 14px;cursor:pointer;color:#fff;font:inherit}
 nav{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--line);z-index:30}
 nav .w{display:flex;gap:6px;padding:8px 12px;flex-wrap:wrap;align-items:center}
 nav button{border:1px solid var(--line);background:#fff;padding:7px 13px;border-radius:999px;cursor:pointer;font:inherit;color:var(--ink)}
@@ -83,8 +85,9 @@ textarea,input[type=text].tx{width:100%;font:inherit;padding:7px 10px;border:1px
 <body>
 <header><div class="w">
 <div><h1>🎯 Provão + RA/RV + IA · um mês com olhar crítico</h1>
-<p>3º ano ADM · 4 encontros de 150 min (3 aulas juntas) · tecnologia para aprender Matemática, e não para fugir dela</p></div>
-<button class="sw" id="swp">👩‍🏫 Modo professor: desligado</button>
+<p id="sub">3º ano · 4 encontros de 150 min (3 aulas juntas) · tecnologia para aprender Matemática, e não para fugir dela</p></div>
+<select id="tsel" class="sw" title="Turma"></select>
+<button class="sw" id="swp" style="margin-left:0">👩‍🏫 Modo professor: desligado</button>
 </div></header>
 <nav><div class="w" id="tabs"></div></nav>
 <main id="main"></main>
@@ -93,7 +96,20 @@ textarea,input[type=text].tx{width:100%;font:inherit;padding:7px 10px;border:1px
 /* ============ utilidades ============ */
 const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
 const fmt=v=>(Math.round(v*100)/100).toString().replace('.',',');
-const store={get(k,d){try{const v=localStorage.getItem('mes_'+k);return v===null?d:JSON.parse(v);}catch(e){return d;}},set(k,v){try{localStorage.setItem('mes_'+k,JSON.stringify(v));}catch(e){}}};
+const TUR=(()=>{try{return localStorage.getItem('mes__turma')||'adm-ta';}catch(e){return 'adm-ta';}})();
+const store={get(k,d){try{const v=localStorage.getItem('mes_'+TUR+'_'+k);return v===null?d:JSON.parse(v);}catch(e){return d;}},set(k,v){try{localStorage.setItem('mes_'+TUR+'_'+k,JSON.stringify(v));}catch(e){}}};
+const TURMAS={
+ 'adm-ta':{nome:'3º ADM TA',g:[['Sofia'],['Luiz'],['Camilly'],['Luan'],['Gabriel P.']]},
+ 'adm-tb':{nome:'3º ADM TB',g:[['Eduardo'],['Evellen'],['Isabelli'],['Francisco'],['Thaís']]},
+ 'info-ta':{nome:'3º Info TA',g:[['Emanuelly','Beatriz Regina','Maria Vitoria Ribeiro','Isabela Ribeira'],['Ana Laura','Isabela viera','Maria Paula','Maria Vitoria Amatte','Sabrina'],['Ana Luiza','Davi Geraldo','Julia Rafaela','Maria Beatriz'],['Beatriz Aparecida','Emily','Lorena'],['Lara','Maria Clara']]}};
+const TM=TURMAS[TUR]||TURMAS['adm-ta'];
+const BL=[[1,4],[5,8],[9,12],[13,15],[16,18]];
+const gi=n=>BL.findIndex(b=>n>=b[0]&&n<=b[1]);
+const short=g=>g.slice(0,2).join(', ')+(g.length>2?' +'+(g.length-2):'');
+const GL=(q=true)=>TM.g.map((g,i)=>'Grupo '+(i+1)+' · '+short(g)+(q?' (Q'+BL[i][0]+'–'+BL[i][1]+')':''));
+$('#tsel').innerHTML=Object.keys(TURMAS).map(k=>`<option value="${k}" ${k===TUR?'selected':''}>Turma: ${TURMAS[k].nome}</option>`).join('');
+$('#tsel').onchange=e=>{try{localStorage.setItem('mes__turma',e.target.value);}catch(x){}location.reload();};
+$('#sub').textContent=TM.nome+' · 4 encontros de 150 min (3 aulas juntas) · tecnologia para aprender Matemática, e não para fugir dela';
 let XP=0;const got=new Set();
 function addXP(key,n){if(got.has(key))return;got.add(key);XP+=n;$('#xp').textContent=XP;
   $('#rank').textContent=XP<30?'Estagiário(a)':XP<80?'Analista Júnior':XP<150?'Analista Pleno':'Mestre do Olhar Crítico';
@@ -109,7 +125,7 @@ function pg(html){const s=document.createElement('section');s.className='pg'+($(
 const ENC=[
 {n:1,t:'Do projeto do Provão ao olhar crítico',blocks:[
  {t:'0–15',m:15,h:'Abertura',d:'Pergunta na lousa: <b>“Se a prova permitisse o celular, vocês resolveriam do mesmo jeito?”</b> Anote palpites. Retomada dos combinados do projeto.',c:['Palpites anotados na lousa']},
- {t:'15–90',m:75,h:'Apresentações dos grupos do Provão',d:'15 min por grupo: slides com <b>os temas abordados</b> e <b>os tópicos a relembrar</b>, e a resolução na lousa, passo a passo.',c:['Sofia (Q1–4)','Luiz (Q5–8)','Camilly (Q9–12)','Luan (Q13–15)','Gabriel P. (Q16–18)'],p:'Se as apresentações já aconteceram, use este bloco para revisão: cada grupo refaz no papel a questão escolhida e a explica em 5 min.'},
+ {t:'15–90',m:75,h:'Apresentações dos grupos do Provão',d:'15 min por grupo: slides com <b>os temas abordados</b> e <b>os tópicos a relembrar</b>, e a resolução na lousa, passo a passo.',c:GL(true),p:'Se as apresentações já aconteceram, use este bloco para revisão: cada grupo refaz no papel a questão escolhida e a explica em 5 min.'},
  {t:'90–120',m:30,h:'Instalar e testar o app de RA',d:'Instale a <b>Calculadora GeoGebra 3D</b> no celular e abra o botão de RA. Anote quais aparelhos da turma funcionam.',c:['App instalado','Permissão de câmera dada','Botão de RA apareceu','Plano B combinado (computador ou projetor)'],p:'Nem todo smartphone é compatível com a RA do GeoGebra; teste antes e deixe o plano B pronto.'},
  {t:'120–145',m:25,h:'Demonstração e três perguntas',d:'O professor mostra o sólido da <b>questão 11</b> no GeoGebra 3D (girando e em RA). Em seguida, as 3 perguntas do mês aparecem nos cartões do Início.',c:['Vi o sólido girando','Anotei as 3 perguntas']},
  {t:'145–150',m:5,h:'Tarefa para o próximo encontro',d:'Escolham <b>1 questão do bloco do grupo</b> (veja o Mapa das questões) e tragam a <b>solução feita no papel</b>.',c:['Questão escolhida']}]},
@@ -118,10 +134,10 @@ const ENC=[
  {t:'15–45',m:30,h:'Prática comum: o sólido da Q11',d:'Todos usam o simulador 3D desta página e depois constroem o sólido no GeoGebra 3D e veem em RA: cubo de 30 cm sem 8 cubos de 10 cm. Conferir o <b>volume</b>.',c:['Construí o sólido','Vi em RA (ou no computador)','Conferi 19 000 cm³'],lab:'cube'},
  {t:'45–105',m:60,h:'Oficina nos grupos',d:'(a) Recorde a solução do papel em 2–3 linhas. (b) Refaça no aplicativo. (c) Preencha a <b>Ficha do grupo</b>.',c:['Papel anotado','Refiz no aplicativo','Ficha preenchida'],p:'Ao circular, faça perguntas em vez de dar respostas: “o que você precisou digitar ou medir?”, “a figura deu o resultado ou só ajudou a enxergar?”.'},
  {t:'105–140',m:35,h:'Preparar a apresentação',d:'De 3 a 4 slides ou um vídeo curto de tela: questão, papel, aplicativo, <b>mesma estratégia?</b>, o que ajudou, limite.',c:['Slides ou vídeo de tela prontos']},
- {t:'140–150',m:10,h:'Fechamento',d:'Sorteio da ordem das apresentações.',c:['Ordem definida']}]},
+ {t:'140–150',m:10,h:'Fechamento e sorteio',d:'Sorteio da ordem das apresentações do próximo encontro.',c:['Ordem definida'],lab:'sorteio'}]},
 {n:3,t:'Seminário de RA/RV e ponte para IA',blocks:[
  {t:'0–10',m:10,h:'Aquecimento',d:'Um grupo diz, em uma frase, o que mais o surpreendeu na oficina.',c:[]},
- {t:'10–60',m:50,h:'Mini-apresentações',d:'8 min por grupo: mostra a tela, diz se a estratégia foi a mesma, aponta <b>uma vantagem</b> e <b>um limite</b>. A turma faz 1 pergunta.',c:['Sofia','Luiz','Camilly','Luan','Gabriel P.']},
+ {t:'10–60',m:50,h:'Mini-apresentações',d:'8 min por grupo: mostra a tela, diz se a estratégia foi a mesma, aponta <b>uma vantagem</b> e <b>um limite</b>. A turma faz 1 pergunta.',c:GL(false)},
  {t:'60–90',m:30,h:'Síntese: ajuda × limita',d:'Jogue <b>“Ajuda ou limita?”</b> abaixo e, em seguida, montem na lousa o <b>guia de uso crítico</b> da turma com 5 critérios.',c:['Guia com 5 critérios escrito'],lab:'game'},
  {t:'90–125',m:35,h:'IA: Experimentos com Google e Quick, Draw!',d:'Em duplas: explorem os sites (20 min) e depois testem o <b>laboratório de IA</b> desta página (k-vizinhos). Discussão em 3 perguntas.',c:['Joguei Quick, Draw!','Treinei o classificador','Discuti as 3 perguntas'],lab:'knn'},
  {t:'125–145',m:20,h:'Lançamento do vídeo',d:'Grupos, tema (IA, Robótica ou os dois), elementos obrigatórios e prazo. Veja o <b>planejador de vídeo</b> no Encontro 4.',c:['Grupos e temas definidos']},
@@ -160,6 +176,7 @@ const Q=[
 // INÍCIO
 pg(`<h2>Bem-vindo(a)! Seu desafio do mês</h2>
 <p class="meta">Você já resolveu questões reais do Provão Paulista. Agora vai refazê-las com tecnologia e responder a uma pergunta difícil: <b>quando a tecnologia realmente ajuda a aprender Matemática, e quando não?</b></p>
+<div class="card" id="turmaCard"></div>
 <div class="card"><h3>Trilha dos 4 encontros <span class="small">(clique para abrir)</span></h3><div class="road" id="road"></div></div>
 <div class="card"><h3>As 3 perguntas do olhar crítico <span class="small">(clique nos cartões)</span></h3><div class="grid3">
 <div class="fl"><div><div class="f">1 · O que a ferramenta fez por mim?</div><div class="b">Calculou? Desenhou? Girou o objeto? Escreva o que ela fez e o que continuou sendo trabalho seu.</div></div></div>
@@ -201,28 +218,33 @@ ENC.forEach(prog);
 $$('.fl').forEach(f=>f.onclick=()=>f.classList.toggle('on'));
 
 // MAPA
-const mapa=pg(`<h2>Mapa das 18 questões</h2><p class="meta">Filtre pelo grupo, abra uma questão e veja qual ferramenta combina. Só as questões 11 e 12 pedem visão espacial.</p>
+const mapa=pg(`<h2>Mapa das 18 questões</h2><p class="meta">Filtre pelo seu grupo, abra uma questão e veja qual ferramenta combina. Só as questões 11 e 12 pedem visão espacial.</p>
 <div class="chips" id="gchips"></div><div id="qlist"></div>`);
-const GR=['Todos','Sofia','Luiz','Camilly','Luan','Gabriel P.'];
-$('#gchips').innerHTML=GR.map((g,i)=>`<button class="chip ${i?'':'on'}">${g}</button>`).join('');
-function drawQ(g){$('#qlist').innerHTML=Q.filter(q=>g==='Todos'||q[1]===g).map(q=>`<details class="qc"><summary><span class="qn">Q${q[0]}</span><b>${q[2]}</b><span class="bg ${q[5]}">RA/RV: ${{s:'ajuda',p:'ajuda em parte',n:'não ajuda'}[q[5]]}</span><span class="small">${q[1]}</span></summary>
-<div class="bd"><table><tr><th style="width:30%">Conteúdo</th><td>${q[3]}</td></tr><tr><th>Ferramenta sugerida</th><td>${q[4]}</td></tr><tr><th>Por quê</th><td>${q[6]}</td></tr></table>
-<div class="profbox prof"><b>Gabarito (conferir com o oficial):</b> ${q[7]}<br><b>Passo-chave:</b> ${q[8]}</div></div></details>`).join('');}
-drawQ('Todos');
-$('#gchips').addEventListener('click',e=>{const b=e.target.closest('.chip');if(!b)return;$$('#gchips .chip').forEach(c=>c.classList.toggle('on',c===b));drawQ(b.textContent);});
+$('#gchips').innerHTML='<button class="chip on" data-g="all">Todos</button>'+TM.g.map((g,i)=>`<button class="chip" data-g="${i}">Grupo ${i+1} · ${short(g)}</button>`).join('');
+function drawQ(g){$('#qlist').innerHTML=Q.filter(q=>g==='all'||gi(q[0])===+g).map(q=>{const G=TM.g[gi(q[0])];return `<details class="qc"><summary><span class="qn">Q${q[0]}</span><b>${q[2]}</b><span class="bg ${q[5]}">RA/RV: ${{s:'ajuda',p:'ajuda em parte',n:'não ajuda'}[q[5]]}</span><span class="small">Grupo ${gi(q[0])+1}</span></summary>
+<div class="bd"><table><tr><th style="width:30%">Grupo responsável</th><td>Grupo ${gi(q[0])+1}: ${G.join(', ')}</td></tr><tr><th>Conteúdo</th><td>${q[3]}</td></tr><tr><th>Ferramenta sugerida</th><td>${q[4]}</td></tr><tr><th>Por quê</th><td>${q[6]}</td></tr></table>
+<div class="profbox prof"><b>Gabarito (conferir com o oficial):</b> ${q[7]}<br><b>Passo-chave:</b> ${q[8]}</div></div></details>`;}).join('');}
+drawQ('all');
+$('#gchips').addEventListener('click',e=>{const b=e.target.closest('.chip');if(!b)return;$$('#gchips .chip').forEach(c=>c.classList.toggle('on',c===b));drawQ(b.dataset.g);});
 
 // FICHA
 const FIELDS=[['Integrantes'],['Questão (número e ideia do enunciado)'],['Conteúdo de Matemática envolvido'],['Resolução no papel: estratégia em 2 ou 3 linhas','a'],['Aplicativo ou ferramenta usada'],['Resolução no aplicativo: passos principais','a'],['A estratégia foi a mesma, parecida ou diferente? Por quê?','a'],['O resultado foi igual ao do papel? Se não, por quê?','a'],['O que a ferramenta ajudou (no mínimo 2 pontos)','a'],['Limites ou dificuldades encontrados (no mínimo 1)','a'],['Recomendamos usar em que tipo de questão? E em qual não?','a']];
-const fi=pg(`<h2>Ficha do grupo</h2><p class="meta">Salva automaticamente neste navegador. Ao final, copie ou baixe o texto, ou imprima.</p>
-<div class="card fich" id="fich">${FIELDS.map((f,i)=>`<label>${f[0]}</label>${f[1]?`<textarea rows="3" data-i="${i}"></textarea>`:`<input class="tx" type="text" data-i="${i}">`}`).join('')}
+const fi=pg(`<h2>Ficha do grupo</h2><p class="meta">Escolha o seu grupo. A ficha salva sozinha neste navegador (uma por grupo). Ao final, copie ou baixe o texto, ou imprima.</p>
+<div class="card fich"><label>Grupo</label><select id="fg" style="font:inherit;padding:6px 10px;border-radius:9px;border:1px solid var(--line)">${TM.g.map((g,i)=>`<option value="${i}">Grupo ${i+1} · ${g.join(', ')}</option>`).join('')}</select>
+<div class="small" id="fq"></div><div id="fich">${FIELDS.map((f,i)=>`<label>${f[0]}</label>${f[1]?`<textarea rows="3" data-i="${i}"></textarea>`:`<input class="tx" type="text" data-i="${i}">`}`).join('')}</div>
 <div class="ctrl noprint" style="margin-top:12px"><button class="btn" id="fcopy">Copiar texto</button><button class="sec" id="fdown">Baixar .txt</button><button class="sec" id="fprint">Imprimir</button><button class="sec" id="fclear">Limpar</button><span class="small" id="fmsg"></span></div></div>`);
-const fsaved=store.get('ficha',{});
-$$('#fich [data-i]').forEach(el=>{el.value=fsaved[el.dataset.i]||'';el.oninput=()=>{const o={};$$('#fich [data-i]').forEach(x=>o[x.dataset.i]=x.value);store.set('ficha',o);};});
-const ftxt=()=>FIELDS.map((f,i)=>`${f[0]}\n${$(`#fich [data-i="${i}"]`).value}\n`).join('\n');
+let fg=store.get('fgrupo',0);$('#fg').value=fg;
+function loadF(){const sv=store.get('ficha_'+fg,{});$$('#fich [data-i]').forEach(el=>el.value=sv[el.dataset.i]||'');
+ if(!sv[0])$('#fich [data-i="0"]').value=TM.g[fg].join(', ');
+ $('#fq').textContent='Questões do grupo: Q'+BL[fg][0]+' a Q'+BL[fg][1]+'. Escolha uma delas para esta ficha.';}
+$('#fg').onchange=e=>{fg=+e.target.value;store.set('fgrupo',fg);loadF();};
+$('#fich').addEventListener('input',()=>{const o={};$$('#fich [data-i]').forEach(x=>o[x.dataset.i]=x.value);store.set('ficha_'+fg,o);});
+loadF();
+const ftxt=()=>'Turma: '+TM.nome+' · Grupo '+(fg+1)+'\n\n'+FIELDS.map((f,i)=>`${f[0]}\n${$(`#fich [data-i="${i}"]`).value}\n`).join('\n');
 $('#fcopy').onclick=()=>{const t=ftxt();(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(()=>$('#fmsg').textContent='Copiado!',()=>{const ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');$('#fmsg').textContent='Copiado!';}catch(e){}ta.remove();});addXP('ficha',15);};
-$('#fdown').onclick=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([ftxt()],{type:'text/plain'}));a.download='ficha_do_grupo.txt';a.click();addXP('ficha',15);};
+$('#fdown').onclick=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([ftxt()],{type:'text/plain'}));a.download='ficha_grupo_'+(fg+1)+'.txt';a.click();addXP('ficha',15);};
 $('#fprint').onclick=()=>window.print();
-$('#fclear').onclick=()=>{if(confirm('Apagar a ficha?')){$$('#fich [data-i]').forEach(x=>x.value='');store.set('ficha',{});}};
+$('#fclear').onclick=()=>{if(confirm('Apagar a ficha deste grupo?')){store.set('ficha_'+fg,{});$$('#fich [data-i]').forEach(x=>x.value='');$('#fich [data-i="0"]').value=TM.g[fg].join(', ');}};
 
 /* ============ LABORATÓRIOS ============ */
 const L={};
@@ -296,6 +318,12 @@ L.game=()=>{const d=document.createElement('div');d.className='card qz';
  let ok=0;d.addEventListener('click',e=>{const b=e.target.closest('button[data-a]');if(!b)return;const st=b.closest('.st'),i=+st.dataset.i;if(st.dataset.done)return;st.dataset.done=1;
   const r=b.dataset.a===S[i][1];if(r){ok++;addXP('g'+i,5);}const f=$('.fb',st);f.style.display='block';f.className='fb '+(r?'ok':'no');f.textContent=(r?'✅ ':'🤔 ')+S[i][2];$('#gs',d).textContent=ok+' / 8';});
  return d;};
+// ---- sorteio
+L.sorteio=()=>{const d=document.createElement('div');d.className='card';
+ d.innerHTML='<h3>🎲 Sorteio da ordem de apresentação</h3><button class="btn" id="sb">Sortear</button> <span class="small">O resultado fica salvo.</span><ol id="so"></ol>';
+ const show=o=>{$('#so',d).innerHTML=o.map(i=>`<li><b>Grupo ${i+1}</b>: ${TM.g[i].join(', ')} <span class="small">(Q${BL[i][0]}–${BL[i][1]})</span></li>`).join('');};
+ const sv=store.get('ordem',null);if(sv)show(sv);
+ $('#sb',d).onclick=()=>{const o=TM.g.map((_,i)=>i);for(let i=o.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[o[i],o[j]]=[o[j],o[i]];}store.set('ordem',o);show(o);};return d;};
 // ---- bilhete
 L.ticket=()=>{const d=document.createElement('div');d.className='card';d.innerHTML=`<h3>🎟️ Bilhete de saída</h3><p>A ferramenta <input class="tx" style="width:180px;display:inline" data-t="0"> ajuda em <input class="tx" style="width:220px;display:inline" data-t="1">, mas não substitui <input class="tx" style="width:220px;display:inline" data-t="2">.</p><button class="sec" id="tk">Registrar (+10 XP)</button> <span class="small" id="tm"></span>`;
  const sv=store.get('ticket',[]);$$('input',d).forEach((x,i)=>{x.value=sv[i]||'';x.oninput=()=>store.set('ticket',$$('input',d).map(y=>y.value));});
@@ -347,6 +375,9 @@ L.video=()=>{const d=document.createElement('div');d.className='card';
  render();return d;};
 
 ENC.forEach(e=>{const host=$('#labs'+e.n);e.blocks.forEach(b=>{if(b.lab){host.appendChild(L[b.lab]());if(b.lab==='cube')host.appendChild(L.tinta());}});});
+
+$('#turmaCard').innerHTML=`<h3>👥 ${TM.nome}: seus grupos e questões</h3><p class="small">Troque a turma no topo da página. Cada grupo cuida de um bloco de questões do Provão.</p>
+<table><tr><th>Grupo</th><th>Integrantes</th><th>Questões</th></tr>${TM.g.map((g,i)=>`<tr><td><b>${i+1}</b></td><td>${g.join(', ')}</td><td>Q${BL[i][0]} a Q${BL[i][1]}</td></tr>`).join('')}</table>`;
 </script>
 </body>
 </html>
