@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Provão + RA/RV + IA · Um mês com olhar crítico</title>
+<style>
+:root{--bg:#f3f5fb;--card:#fff;--ink:#1d2433;--mut:#5b6478;--acc:#2f5bea;--grn:#0f9d7a;--org:#e8710a;--red:#d1344a;--line:#dfe3ee}
+*{box-sizing:border-box}
+body{margin:0;font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink)}
+header{background:linear-gradient(135deg,#14246b,#2f5bea 60%,#6d4cf0);color:#fff;padding:22px 18px}
+.w{max-width:1100px;margin:0 auto}
+header .w{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+header h1{margin:0;font-size:1.6rem}header p{margin:2px 0 0;opacity:.92}
+header .sw{margin-left:auto;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:6px 14px;cursor:pointer;color:#fff;font:inherit}
+nav{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--line);z-index:30}
+nav .w{display:flex;gap:6px;padding:8px 12px;flex-wrap:wrap;align-items:center}
+nav button{border:1px solid var(--line);background:#fff;padding:7px 13px;border-radius:999px;cursor:pointer;font:inherit;color:var(--ink)}
+nav button.on{background:var(--acc);color:#fff;border-color:var(--acc)}
+#xpbox{margin-left:auto;font-weight:600;color:#7a4b00;background:#fff3d6;border:1px solid #f1d28a;border-radius:999px;padding:5px 13px;white-space:nowrap}
+main{max-width:1100px;margin:0 auto;padding:18px 14px 70px}
+.pg{display:none}.pg.on{display:block}
+h2{margin:6px 0 4px;font-size:1.5rem}h3{margin:0 0 8px;font-size:1.1rem}
+.meta{color:var(--mut);margin:0 0 12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:15px 18px;margin:14px 0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:820px){.grid2,.grid3{grid-template-columns:1fr}}
+button.btn,a.btn{display:inline-block;background:var(--acc);color:#fff;text-decoration:none;padding:8px 15px;border-radius:10px;font:inherit;font-weight:600;border:0;cursor:pointer}
+button.sec{background:#fff;color:var(--acc);border:1px solid var(--acc);padding:6px 12px;border-radius:9px;font:inherit;cursor:pointer}
+.small{font-size:.9rem;color:var(--mut)}
+code,kbd{background:#eef1fb;border:1px solid #d9def0;border-radius:6px;padding:1px 6px;font-family:ui-monospace,Consolas,monospace;font-size:.92em}
+.tip,.warn,.ok{border-radius:10px;padding:9px 13px;margin:9px 0;font-size:.96rem}
+.tip{background:#fff7e6;border:1px solid #f5d28b}.warn{background:#fff1ec;border:1px solid #f3b9a3}.ok{background:#e6f8ef;border:1px solid #9bdcbc}
+.prof{display:none!important}body.pf .prof{display:block!important}body.pf span.prof,body.pf button.prof{display:inline-block!important}
+.profbox{background:#f1ecff;border:1px solid #cfc3f7;border-radius:10px;padding:9px 13px;margin:9px 0;font-size:.95rem}
+/* roadmap */
+.road{display:flex;gap:0;align-items:stretch;flex-wrap:wrap}
+.rd{flex:1;min-width:200px;background:#fff;border:1px solid var(--line);padding:12px 14px;cursor:pointer;position:relative}
+.rd:first-child{border-radius:14px 0 0 14px}.rd:last-child{border-radius:0 14px 14px 0}
+.rd:hover{background:#f4f7ff}.rd b{display:block}.rd .n{font-size:.78rem;color:var(--acc);font-weight:700;letter-spacing:.5px}
+.rd .pb{height:6px;background:#e8ebf5;border-radius:99px;margin-top:8px;overflow:hidden}.rd .pb i{display:block;height:100%;background:var(--grn);width:0}
+@media(max-width:820px){.rd,.rd:first-child,.rd:last-child{border-radius:12px;margin:4px 0}}
+/* flip cards */
+.fl{perspective:800px;cursor:pointer;height:150px}.fl>div{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+.fl.on>div{transform:rotateY(180deg)}
+.fl .f,.fl .b{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;padding:14px;display:flex;flex-direction:column;justify-content:center}
+.fl .f{background:linear-gradient(135deg,#2f5bea,#6d4cf0);color:#fff;font-weight:700;font-size:1.05rem;text-align:center;align-items:center}
+.fl .b{background:#fff;border:1px solid var(--line);transform:rotateY(180deg);font-size:.95rem}
+/* timeline */
+.blk{border:1px solid var(--line);border-radius:12px;margin:8px 0;background:#fff;overflow:hidden}
+.blk summary{list-style:none;cursor:pointer;display:flex;gap:10px;align-items:center;padding:10px 14px}
+.blk summary::-webkit-details-marker{display:none}
+.tm{background:#eef1fb;border:1px solid #d9def0;border-radius:8px;padding:2px 9px;font-weight:700;font-size:.85rem;white-space:nowrap;min-width:78px;text-align:center}
+.blk .bd{padding:2px 16px 12px 16px}.blk.dn{background:#f1fbf6;border-color:#9bdcbc}
+.blk label.dn{margin-left:auto;font-size:.88rem;color:var(--mut);white-space:nowrap}
+.cd{font-variant-numeric:tabular-nums;font-weight:700;color:var(--org);margin-left:8px}
+.pbar{height:8px;background:#e8ebf5;border-radius:99px;overflow:hidden;margin:6px 0}.pbar i{display:block;height:100%;background:linear-gradient(90deg,var(--acc),var(--grn));width:0;transition:width .3s}
+/* chips & q cards */
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 10px}
+.chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:5px 13px;cursor:pointer;font:inherit}.chip.on{background:var(--acc);color:#fff;border-color:var(--acc)}
+.qc{border:1px solid var(--line);border-radius:12px;background:#fff;margin:8px 0}
+.qc summary{cursor:pointer;list-style:none;padding:10px 14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}.qc summary::-webkit-details-marker{display:none}
+.qn{background:var(--acc);color:#fff;border-radius:8px;padding:1px 9px;font-weight:700}
+.bg{font-size:.78rem;border-radius:999px;padding:2px 10px;font-weight:700}.bg.s{background:#d9f5e8;color:#0a6b4f}.bg.p{background:#fff1cc;color:#7a5600}.bg.n{background:#eceff6;color:#555e75}
+.qc .bd{padding:0 16px 12px}
+table{border-collapse:collapse;width:100%;margin:8px 0}th,td{border:1px solid var(--line);padding:5px 9px;text-align:left}th{background:#f0f3fb}
+/* labs */
+.lab canvas{width:100%;max-width:560px;border:1px solid var(--line);border-radius:10px;background:#fff;display:block;touch-action:none}
+.ctrl{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:8px 0}
+.ctrl input[type=range]{width:180px}.ctrl select,.ctrl input[type=number]{font:inherit;padding:5px 7px;border:1px solid var(--line);border-radius:8px}
+.ctrl input[type=number]{width:78px}
+.kpi{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0}.kpi div{background:#eef3ff;border:1px solid #c6d4fb;border-radius:10px;padding:6px 12px}.kpi b{font-size:1.15rem;display:block}
+.qz .st{border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin:8px 0;background:#fff}
+.qz .bt{display:flex;gap:6px;margin-top:6px}.qz .bt button{font:inherit;border:1px solid var(--line);background:#fff;border-radius:9px;padding:4px 12px;cursor:pointer}
+.qz .fb{margin-top:6px;padding:6px 10px;border-radius:8px}.qz .fb.ok{background:#e6f8ef}.qz .fb.no{background:#fff1ec}
+textarea,input[type=text].tx{width:100%;font:inherit;padding:7px 10px;border:1px solid var(--line);border-radius:9px}
+.fich label{display:block;font-weight:600;margin-top:10px}
+.sc{display:flex;gap:8px;align-items:center;border:1px solid var(--line);border-radius:10px;padding:6px 10px;margin:5px 0;background:#fff}
+.sc .ty{background:#eef1fb;border-radius:8px;padding:1px 8px;font-size:.85rem;font-weight:600}
+@media print{header,nav,.noprint{display:none!important}.pg{display:block!important}}
+</style>
+</head>
+<body>
+<header><div class="w">
+<div><h1>🎯 Provão + RA/RV + IA · um mês com olhar crítico</h1>
+<p>3º ano ADM · 4 encontros de 150 min (3 aulas juntas) · tecnologia para aprender Matemática, e não para fugir dela</p></div>
+<button class="sw" id="swp">👩‍🏫 Modo professor: desligado</button>
+</div></header>
+<nav><div class="w" id="tabs"></div></nav>
+<main id="main"></main>
+
+<script>
+/* ============ utilidades ============ */
+const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const fmt=v=>(Math.round(v*100)/100).toString().replace('.',',');
+const store={get(k,d){try{const v=localStorage.getItem('mes_'+k);return v===null?d:JSON.parse(v);}catch(e){return d;}},set(k,v){try{localStorage.setItem('mes_'+k,JSON.stringify(v));}catch(e){}}};
+let XP=0;const got=new Set();
+function addXP(key,n){if(got.has(key))return;got.add(key);XP+=n;$('#xp').textContent=XP;
+  $('#rank').textContent=XP<30?'Estagiário(a)':XP<80?'Analista Júnior':XP<150?'Analista Pleno':'Mestre do Olhar Crítico';
+  $('#xpbox').animate([{transform:'scale(1.15)'},{transform:'scale(1)'}],{duration:350});}
+const PAGES=['Início','Encontro 1','Encontro 2','Encontro 3','Encontro 4','Mapa das questões','Ficha do grupo'];
+$('#tabs').innerHTML=PAGES.map((p,i)=>`<button data-i="${i}" class="${i?'':'on'}">${p}</button>`).join('')+'<span id="xpbox">⭐ <span id="xp">0</span> XP · <span id="rank">Estagiário(a)</span></span>';
+function go(i){$$('.pg').forEach((s,k)=>s.classList.toggle('on',k===i));$$('#tabs button').forEach((b,k)=>b.classList.toggle('on',k===i));window.scrollTo({top:0,behavior:'smooth'});}
+$('#tabs').addEventListener('click',e=>{const b=e.target.closest('button');if(b)go(+b.dataset.i);});
+$('#swp').onclick=()=>{const on=document.body.classList.toggle('pf');$('#swp').textContent='👩‍🏫 Modo professor: '+(on?'ligado':'desligado');};
+function pg(html){const s=document.createElement('section');s.className='pg'+($('#main').children.length?'':' on');s.innerHTML=html;$('#main').appendChild(s);return s;}
+
+/* ============ dados dos encontros ============ */
+const ENC=[
+{n:1,t:'Do projeto do Provão ao olhar crítico',blocks:[
+ {t:'0–15',m:15,h:'Abertura',d:'Pergunta na lousa: <b>“Se a prova permitisse o celular, vocês resolveriam do mesmo jeito?”</b> Anote palpites. Retomada dos combinados do projeto.',c:['Palpites anotados na lousa']},
+ {t:'15–90',m:75,h:'Apresentações dos grupos do Provão',d:'15 min por grupo: slides com <b>os temas abordados</b> e <b>os tópicos a relembrar</b>, e a resolução na lousa, passo a passo.',c:['Sofia (Q1–4)','Luiz (Q5–8)','Camilly (Q9–12)','Luan (Q13–15)','Gabriel P. (Q16–18)'],p:'Se as apresentações já aconteceram, use este bloco para revisão: cada grupo refaz no papel a questão escolhida e a explica em 5 min.'},
+ {t:'90–120',m:30,h:'Instalar e testar o app de RA',d:'Instale a <b>Calculadora GeoGebra 3D</b> no celular e abra o botão de RA. Anote quais aparelhos da turma funcionam.',c:['App instalado','Permissão de câmera dada','Botão de RA apareceu','Plano B combinado (computador ou projetor)'],p:'Nem todo smartphone é compatível com a RA do GeoGebra; teste antes e deixe o plano B pronto.'},
+ {t:'120–145',m:25,h:'Demonstração e três perguntas',d:'O professor mostra o sólido da <b>questão 11</b> no GeoGebra 3D (girando e em RA). Em seguida, as 3 perguntas do mês aparecem nos cartões do Início.',c:['Vi o sólido girando','Anotei as 3 perguntas']},
+ {t:'145–150',m:5,h:'Tarefa para o próximo encontro',d:'Escolham <b>1 questão do bloco do grupo</b> (veja o Mapa das questões) e tragam a <b>solução feita no papel</b>.',c:['Questão escolhida']}]},
+{n:2,t:'Oficina de RA/RV nas questões',blocks:[
+ {t:'0–15',m:15,h:'Retomada',d:'As três perguntas: <i>o que a ferramenta fez por mim? o que eu precisei decidir? onde ela falhou ou me enganou?</i> Confirme a questão do grupo.',c:['Questão confirmada']},
+ {t:'15–45',m:30,h:'Prática comum: o sólido da Q11',d:'Todos usam o simulador 3D desta página e depois constroem o sólido no GeoGebra 3D e veem em RA: cubo de 30 cm sem 8 cubos de 10 cm. Conferir o <b>volume</b>.',c:['Construí o sólido','Vi em RA (ou no computador)','Conferi 19 000 cm³'],lab:'cube'},
+ {t:'45–105',m:60,h:'Oficina nos grupos',d:'(a) Recorde a solução do papel em 2–3 linhas. (b) Refaça no aplicativo. (c) Preencha a <b>Ficha do grupo</b>.',c:['Papel anotado','Refiz no aplicativo','Ficha preenchida'],p:'Ao circular, faça perguntas em vez de dar respostas: “o que você precisou digitar ou medir?”, “a figura deu o resultado ou só ajudou a enxergar?”.'},
+ {t:'105–140',m:35,h:'Preparar a apresentação',d:'De 3 a 4 slides ou um vídeo curto de tela: questão, papel, aplicativo, <b>mesma estratégia?</b>, o que ajudou, limite.',c:['Slides ou vídeo de tela prontos']},
+ {t:'140–150',m:10,h:'Fechamento',d:'Sorteio da ordem das apresentações.',c:['Ordem definida']}]},
+{n:3,t:'Seminário de RA/RV e ponte para IA',blocks:[
+ {t:'0–10',m:10,h:'Aquecimento',d:'Um grupo diz, em uma frase, o que mais o surpreendeu na oficina.',c:[]},
+ {t:'10–60',m:50,h:'Mini-apresentações',d:'8 min por grupo: mostra a tela, diz se a estratégia foi a mesma, aponta <b>uma vantagem</b> e <b>um limite</b>. A turma faz 1 pergunta.',c:['Sofia','Luiz','Camilly','Luan','Gabriel P.']},
+ {t:'60–90',m:30,h:'Síntese: ajuda × limita',d:'Jogue <b>“Ajuda ou limita?”</b> abaixo e, em seguida, montem na lousa o <b>guia de uso crítico</b> da turma com 5 critérios.',c:['Guia com 5 critérios escrito'],lab:'game'},
+ {t:'90–125',m:35,h:'IA: Experimentos com Google e Quick, Draw!',d:'Em duplas: explorem os sites (20 min) e depois testem o <b>laboratório de IA</b> desta página (k-vizinhos). Discussão em 3 perguntas.',c:['Joguei Quick, Draw!','Treinei o classificador','Discuti as 3 perguntas'],lab:'knn'},
+ {t:'125–145',m:20,h:'Lançamento do vídeo',d:'Grupos, tema (IA, Robótica ou os dois), elementos obrigatórios e prazo. Veja o <b>planejador de vídeo</b> no Encontro 4.',c:['Grupos e temas definidos']},
+ {t:'145–150',m:5,h:'Bilhete de saída',d:'Complete: <b>“A ferramenta ___ ajuda em ___, mas não substitui ___.”</b>',c:['Bilhete escrito'],lab:'ticket'}]},
+{n:4,t:'IA e Robótica: produção e exibição do vídeo',blocks:[
+ {t:'0–20',m:20,h:'Sessão de vídeos de Arduino e robótica',d:'Assistam aos vídeos do PTD e leiam os critérios do vídeo (planejador abaixo).',c:['Vi os vídeos','Li os critérios']},
+ {t:'20–60',m:40,h:'Roteiro e storyboard',d:'Definição, curiosidades, aplicações, limite e fontes. Use o <b>planejador de vídeo</b>.',c:['Roteiro com todos os elementos obrigatórios'],lab:'video'},
+ {t:'60–115',m:55,h:'Gravação e edição',d:'Gravação com o celular; edição simples.',c:['Cenas gravadas','Edição iniciada']},
+ {t:'115–140',m:25,h:'Exibição de prévias e feedback',d:'Cada grupo mostra a prévia e recebe 1 elogio e 1 sugestão.',c:['Prévia exibida','Feedback anotado']},
+ {t:'140–150',m:10,h:'Prazo do vídeo final',d:'Um vídeo não se faz em um encontro só: <b>prazo sugerido de 1 semana</b>.',c:['Prazo anotado'],p:'Rubrica do vídeo (10 pts): conteúdo correto 3 · curiosidades e aplicações 2 · olhar crítico (limite ou risco) 2 · roteiro e clareza 2 · fontes 1.'}]}
+];
+
+/* ============ dados das questões ============ */
+const Q=[
+[1,'Sofia','Chapa quadrada de 100 cm com 49 discos de 150 cm²: área que sobra','Geometria plana: áreas','GeoGebra 2D (arranjo 7 × 7)','n','A conta direta é mais rápida; o app só ajuda a visualizar o arranjo.','(A) 2 650 cm²','100 × 100 = 10 000; 49 × 150 = 7 350; 10 000 − 7 350.'],
+[2,'Sofia','Pressão da água × profundidade, função linear em gráfico','Função afim lida em gráfico','GeoGebra gráficos','n','Gráfico 2D basta.','ver figura','Ler o coeficiente no gráfico e calcular em 70 m.'],
+[3,'Sofia','Temperatura do bolo T(s) = 20 + 160·2^(−0,2s) após 20 min','Função exponencial','GeoGebra gráficos ou planilha','n','Não pede visualização espacial.','(E) 30 ºC','T(20) = 20 + 160·2⁻⁴ = 20 + 10.'],
+[4,'Sofia','Compasso de hastes 12 cm, cos α = 7/9: raio da circunferência','Trigonometria: lei dos cossenos','GeoGebra 2D (construção com compasso)','p','Construção dinâmica ajuda, mas sem RA.','(A) 8 cm','r² = 2·12²·(1 − 7/9) = 64.'],
+[5,'Luiz','Triângulo retângulo ABC com ponto D: ângulo β e sen α (usa figura)','Trigonometria no triângulo retângulo','GeoGebra 2D','n','Geometria plana.','ver figura','Usar as medidas e a figura da prova.'],
+[6,'Luiz','Triângulo ABC, D em BC, ângulos ABC e DAC iguais: comprimento BC','Semelhança de triângulos','GeoGebra 2D (arrastar vértices)','p','Mostra que a relação vale em vários triângulos.','(A) 9,0 cm','ABC ~ DAC: AC² = BC·DC; 36 = (5 + x)x, x = 4, BC = 9.'],
+[7,'Luiz','Tabela de gastos de uma família e legenda do gráfico','Leitura de tabela e gráfico','Planilha','n','Gráfico de planilha resolve.','ver figura','Ordenar os valores e conferir a legenda.'],
+[8,'Luiz','Filmes numa plataforma por ano: maior aumento percentual','Variação percentual em gráfico','Planilha','n','Planilha calcula as variações de uma vez.','ver figura','Calcular (novo − antigo)/antigo ano a ano.'],
+[9,'Camilly','100 bebidas, 20 sucos (R$ 3) e o resto refrigerantes (R$ 4): gasto','Operações e problemas de contagem','Planilha','n','Conta simples.','(C) R$ 380,00','20 × 3 + 80 × 4 = 60 + 320.'],
+[10,'Camilly','100 prendas, bolas R$ 5 e molas R$ 7, R$ 610 disponíveis','Sistema linear 2 × 2','GeoGebra: interseção de retas','n','O gráfico mostra a solução como interseção.','(C) 55 molas e 45 bolas','x + y = 100 e 5x + 7y = 610 ⇒ y = 55, x = 45.'],
+[11,'Camilly','Cubo de 30 cm sem 8 cubos de 10 cm nas pontas: massa a 0,5 g/cm³','Volume de sólidos','GeoGebra 3D com RA','s','Ver o sólido e os cubos retirados reduz erros de contagem.','(A) 9,5 kg','30³ − 8·10³ = 19 000 cm³; × 0,5 g = 9 500 g.'],
+[12,'Camilly','40 caixas pequenas e 20 médias, tinta com rendimento 2 m²/L, latas de 900 mL','Área da superfície de paralelepípedos','GeoGebra 3D com RA + caixas reais','s','Planificação e comparação com a caixa real.','(D) 4 latas','950 × 40 + 1 600 × 20 = 70 000 cm² = 7 m²; 3,5 L; 3,5 ÷ 0,9 ≈ 3,9 ⇒ 4.'],
+[13,'Luan','Brasileiros em Portugal e no Reino Unido: quantas vezes','Razão entre números','Calculadora ou planilha','n','Não pede visualização.','(D) 2,23','513 000 ÷ 230 000.'],
+[14,'Luan','Divisão igual dos custos entre Ana, Bianca e Cíntia','Média e divisão proporcional','Planilha','n','Planilha confere o saldo de cada uma.','(B) 18 para Ana e 3 para Bianca','Total R$ 126, R$ 42 cada; Cíntia pagou 21.'],
+[15,'Luan','Regra de três composta: memes por pessoas e dias','Proporcionalidade','Planilha','n','Planilha testa casos.','(E) 9','0,5 meme/pessoa/dia; 48 em 8 dias = 12 pessoas; 12 − 3.'],
+[16,'Gabriel P.','Sequência recursiva x₁ = 5: nono termo','Sequências','Planilha','n','Planilha reproduz a recursão.','(C) 230','5, 10, 20, 25, 50, 55, 110, 115, 230.'],
+[17,'Gabriel P.','Brasão: 5 cores, 3 filtros e 4 tamanhos diferentes do original','Princípio multiplicativo','Diagrama de árvore ou planilha','n','Árvore ajuda a contar.','(A) 60','5 × 3 × 4.'],
+[18,'Gabriel P.','Sorvetes: probabilidade de os dois primeiros receberem o mesmo sabor','Probabilidade sem reposição','Simulação em planilha','n','A simulação mostra a frequência convergindo para ≈ 0,52.','(E) 11/21','(10/15)(9/14) + (5/15)(4/14) = 110/210.']
+];
+
+/* ============ páginas ============ */
+// INÍCIO
+pg(`<h2>Bem-vindo(a)! Seu desafio do mês</h2>
+<p class="meta">Você já resolveu questões reais do Provão Paulista. Agora vai refazê-las com tecnologia e responder a uma pergunta difícil: <b>quando a tecnologia realmente ajuda a aprender Matemática, e quando não?</b></p>
+<div class="card"><h3>Trilha dos 4 encontros <span class="small">(clique para abrir)</span></h3><div class="road" id="road"></div></div>
+<div class="card"><h3>As 3 perguntas do olhar crítico <span class="small">(clique nos cartões)</span></h3><div class="grid3">
+<div class="fl"><div><div class="f">1 · O que a ferramenta fez por mim?</div><div class="b">Calculou? Desenhou? Girou o objeto? Escreva o que ela fez e o que continuou sendo trabalho seu.</div></div></div>
+<div class="fl"><div><div class="f">2 · O que eu precisei decidir?</div><div class="b">Que medidas digitar, qual figura construir, como interpretar e arredondar o resultado. A ferramenta não decide por você.</div></div></div>
+<div class="fl"><div><div class="f">3 · Onde ela falhou ou me enganou?</div><div class="b">Aparelho sem RA, medida digitada errada, resposta bonita, mas errada, ou questão que nem pedia esse recurso.</div></div></div></div></div>
+<div class="grid2"><div class="card"><h3>Como usar esta página</h3><ul><li>Cada encontro tem blocos de tempo com <b>caixinhas para marcar</b>.</li><li>Os laboratórios (sólido 3D, calculadora de tinta, IA, vídeo) estão nos encontros.</li><li>A <b>Ficha do grupo</b> salva sozinha neste navegador.</li><li>Ganhe XP acertando e concluindo.</li></ul></div>
+<div class="card"><h3>Combinados</h3><ul><li>Resolver no papel <b>antes</b> de usar o aplicativo.</li><li>Dizer sempre: a estratégia foi a mesma, parecida ou diferente?</li><li>Apontar <b>pelo menos 2 ajudas e 1 limite</b>.</li><li>Dizer “aqui não vale usar RA/RV” também é resultado.</li></ul></div></div>
+<div class="profbox prof"><b>Modo professor ligado.</b> Você vê cronômetros nos blocos, o gabarito no Mapa das questões e as rubricas. Desligue o modo antes de projetar para a turma.</div>`);
+
+// ENCONTROS
+ENC.forEach(e=>{
+ const s=pg(`<h2>Encontro ${e.n} · ${e.t}</h2><p class="meta">150 minutos (3 aulas de 50 juntas). Marque os blocos conforme avançam.</p>
+ <div class="card"><div class="pbar"><i id="pb${e.n}"></i></div><span class="small" id="pt${e.n}">0 de ${e.blocks.length} blocos</span></div>
+ <div id="bl${e.n}"></div><div id="labs${e.n}"></div>`);
+ const box=$('#bl'+e.n);
+ e.blocks.forEach((b,i)=>{
+  const id=`e${e.n}b${i}`,saved=store.get(id,[]);
+  const d=document.createElement('details');d.className='blk';d.open=i===0;
+  d.innerHTML=`<summary><span class="tm">${b.t} min</span><b>${b.h}</b><span class="cd prof" data-m="${b.m}"></span><label class="dn" onclick="event.stopPropagation()"><input type="checkbox"> feito</label></summary>
+  <div class="bd"><p>${b.d}</p>${b.c.length?'<div>'+b.c.map((c,k)=>`<label style="display:block"><input type="checkbox" data-k="${k}" ${saved.includes(k)?'checked':''}> ${c}</label>`).join('')+'</div>':''}
+  ${b.p?`<div class="profbox prof">${b.p}</div>`:''}<button class="sec prof" data-t="${b.m}">⏱ iniciar ${b.m} min</button></div>`;
+  box.appendChild(d);
+  const upd=()=>{const all=$$('input[data-k]',d),on=all.filter(x=>x.checked).map(x=>+x.dataset.k);store.set(id,on);
+   const fin=$('summary input',d).checked;d.classList.toggle('dn',fin);store.set(id+'f',fin);prog(e);};
+  $('summary input',d).checked=store.get(id+'f',false);d.classList.toggle('dn',$('summary input',d).checked);
+  d.addEventListener('change',upd);
+  // timer
+  const tb=$('button[data-t]',d),cd=$('.cd',d);let iv=null,left=0;
+  tb.onclick=()=>{clearInterval(iv);left=b.m*60;const tick=()=>{cd.textContent=`${String(Math.floor(left/60)).padStart(2,'0')}:${String(left%60).padStart(2,'0')}`;if(left--<=0){clearInterval(iv);cd.textContent='⏰ tempo!';}};tick();iv=setInterval(tick,1000);};
+ });
+ prog(e);
+});
+function prog(e){const n=e.blocks.filter((b,i)=>store.get(`e${e.n}b${i}f`,false)).length;
+ $('#pb'+e.n).style.width=n/e.blocks.length*100+'%';$('#pt'+e.n).textContent=`${n} de ${e.blocks.length} blocos`;
+ const r=$('.rd[data-e="'+e.n+'"] .pb i');if(r)r.style.width=n/e.blocks.length*100+'%';if(n===e.blocks.length)addXP('enc'+e.n,20);}
+$('#road').innerHTML=ENC.map(e=>`<div class="rd" data-e="${e.n}"><span class="n">ENCONTRO ${e.n}</span><b>${e.t}</b><div class="pb"><i></i></div></div>`).join('');
+$('#road').addEventListener('click',ev=>{const r=ev.target.closest('.rd');if(r)go(+r.dataset.e);});
+ENC.forEach(prog);
+$$('.fl').forEach(f=>f.onclick=()=>f.classList.toggle('on'));
+
+// MAPA
+const mapa=pg(`<h2>Mapa das 18 questões</h2><p class="meta">Filtre pelo grupo, abra uma questão e veja qual ferramenta combina. Só as questões 11 e 12 pedem visão espacial.</p>
+<div class="chips" id="gchips"></div><div id="qlist"></div>`);
+const GR=['Todos','Sofia','Luiz','Camilly','Luan','Gabriel P.'];
+$('#gchips').innerHTML=GR.map((g,i)=>`<button class="chip ${i?'':'on'}">${g}</button>`).join('');
+function drawQ(g){$('#qlist').innerHTML=Q.filter(q=>g==='Todos'||q[1]===g).map(q=>`<details class="qc"><summary><span class="qn">Q${q[0]}</span><b>${q[2]}</b><span class="bg ${q[5]}">RA/RV: ${{s:'ajuda',p:'ajuda em parte',n:'não ajuda'}[q[5]]}</span><span class="small">${q[1]}</span></summary>
+<div class="bd"><table><tr><th style="width:30%">Conteúdo</th><td>${q[3]}</td></tr><tr><th>Ferramenta sugerida</th><td>${q[4]}</td></tr><tr><th>Por quê</th><td>${q[6]}</td></tr></table>
+<div class="profbox prof"><b>Gabarito (conferir com o oficial):</b> ${q[7]}<br><b>Passo-chave:</b> ${q[8]}</div></div></details>`).join('');}
+drawQ('Todos');
+$('#gchips').addEventListener('click',e=>{const b=e.target.closest('.chip');if(!b)return;$$('#gchips .chip').forEach(c=>c.classList.toggle('on',c===b));drawQ(b.textContent);});
+
+// FICHA
+const FIELDS=[['Integrantes'],['Questão (número e ideia do enunciado)'],['Conteúdo de Matemática envolvido'],['Resolução no papel: estratégia em 2 ou 3 linhas','a'],['Aplicativo ou ferramenta usada'],['Resolução no aplicativo: passos principais','a'],['A estratégia foi a mesma, parecida ou diferente? Por quê?','a'],['O resultado foi igual ao do papel? Se não, por quê?','a'],['O que a ferramenta ajudou (no mínimo 2 pontos)','a'],['Limites ou dificuldades encontrados (no mínimo 1)','a'],['Recomendamos usar em que tipo de questão? E em qual não?','a']];
+const fi=pg(`<h2>Ficha do grupo</h2><p class="meta">Salva automaticamente neste navegador. Ao final, copie ou baixe o texto, ou imprima.</p>
+<div class="card fich" id="fich">${FIELDS.map((f,i)=>`<label>${f[0]}</label>${f[1]?`<textarea rows="3" data-i="${i}"></textarea>`:`<input class="tx" type="text" data-i="${i}">`}`).join('')}
+<div class="ctrl noprint" style="margin-top:12px"><button class="btn" id="fcopy">Copiar texto</button><button class="sec" id="fdown">Baixar .txt</button><button class="sec" id="fprint">Imprimir</button><button class="sec" id="fclear">Limpar</button><span class="small" id="fmsg"></span></div></div>`);
+const fsaved=store.get('ficha',{});
+$$('#fich [data-i]').forEach(el=>{el.value=fsaved[el.dataset.i]||'';el.oninput=()=>{const o={};$$('#fich [data-i]').forEach(x=>o[x.dataset.i]=x.value);store.set('ficha',o);};});
+const ftxt=()=>FIELDS.map((f,i)=>`${f[0]}\n${$(`#fich [data-i="${i}"]`).value}\n`).join('\n');
+$('#fcopy').onclick=()=>{const t=ftxt();(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(()=>$('#fmsg').textContent='Copiado!',()=>{const ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');$('#fmsg').textContent='Copiado!';}catch(e){}ta.remove();});addXP('ficha',15);};
+$('#fdown').onclick=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([ftxt()],{type:'text/plain'}));a.download='ficha_do_grupo.txt';a.click();addXP('ficha',15);};
+$('#fprint').onclick=()=>window.print();
+$('#fclear').onclick=()=>{if(confirm('Apagar a ficha?')){$$('#fich [data-i]').forEach(x=>x.value='');store.set('ficha',{});}};
+
+/* ============ LABORATÓRIOS ============ */
+const L={};
+// ---- Q11 cubo 3D + Q12 tinta
+L.cube=()=>{
+ const d=document.createElement('div');d.className='card lab';
+ d.innerHTML=`<h3>🧊 Simulador da questão 11: gire o sólido e retire os cantos</h3>
+ <canvas width="560" height="420"></canvas>
+ <div class="ctrl"><label>Cantos retirados: <b id="ct">0</b> <input type="range" id="cs" min="0" max="8" value="0"></label>
+ <label>Densidade (g/cm³) <input type="number" id="cdn" step="0.1" value="0.5"></label><label><input type="checkbox" id="cgh" checked> mostrar cubos retirados</label><label><input type="checkbox" id="cau" checked> girar sozinho</label></div>
+ <div class="kpi"><div>Volume<b id="cv">27 000 cm³</b></div><div>Massa<b id="cm">13,5 kg</b></div><div>Cubos de 10 cm<b id="cn">27</b></div></div>
+ <p class="small">Arraste com o mouse ou o dedo para girar. Isto é uma <b>simulação na tela</b>, e não RA: na RA do GeoGebra o mesmo sólido aparece sobre a sua mesa. O que muda para o raciocínio?</p>
+ <div class="tip">Desafio: quantos cubos pequenos restam depois de retirar os 8 cantos? E por que a massa da peça final dá 9,5 kg?</div>`;
+ const cv=$('canvas',d),ctx=cv.getContext('2d');let yaw=.7,pitch=.55,drag=null,t=0;
+ const corners=[];for(const i of[0,2])for(const j of[0,2])for(const k of[0,2])corners.push([i,j,k]);
+ const gone=new Set(),present=(i,j,k)=>i>=0&&i<3&&j>=0&&j<3&&k>=0&&k<3&&!gone.has(i+','+j+','+k);
+ function setT(n){gone.clear();corners.slice(0,n).forEach(c=>gone.add(c.join(',')));t=n;$('#ct',d).textContent=n;
+  const cnt=27-n,vol=cnt*1000;$('#cv',d).textContent=vol.toLocaleString('pt-BR')+' cm³';$('#cm',d).textContent=fmt(vol*(+$('#cdn',d).value||0)/1000)+' kg';$('#cn',d).textContent=cnt;if(n===8)addXP('cube8',10);}
+ const D=[[1,0,0],[-1,0,0],[0,1,0],[0,-1,0],[0,0,1],[0,0,-1]];
+ function rot(p){let[x,y,z]=p;const cy=Math.cos(yaw),sy=Math.sin(yaw),cp=Math.cos(pitch),sp=Math.sin(pitch);
+  const x1=x*cy+z*sy,z1=-x*sy+z*cy;return[x1,y*cp-z1*sp,y*sp+z1*cp];}
+ function draw(){ctx.clearRect(0,0,560,420);const S=5.2,cx=280,cy=215,faces=[],ghost=[];
+  for(let i=0;i<3;i++)for(let j=0;j<3;j++)for(let k=0;k<3;k++){const c=[(i-1)*10,(j-1)*10,(k-1)*10];
+   if(present(i,j,k)){D.forEach(dv=>{if(present(i+dv[0],j+dv[1],k+dv[2]))return;
+     const ax=[0,1,2].filter(a=>dv[a]===0),u=[0,0,0],v=[0,0,0];u[ax[0]]=5;v[ax[1]]=5;const base=c.map((x,a)=>x+5*dv[a]);
+     const q=[[-1,-1],[1,-1],[1,1],[-1,1]].map(([a,b])=>rot(base.map((x,m)=>x+a*u[m]+b*v[m])));
+     const nr=rot(dv);if(nr[2]<=0)return;const z=q.reduce((s,p)=>s+p[2],0)/4;
+     const br=.45+.55*Math.max(0,nr[0]*.35+nr[1]*.75+nr[2]*.55);faces.push({q,z,br});});}
+   else if($('#cgh',d).checked&&corners.some(cc=>cc[0]===i&&cc[1]===j&&cc[2]===k)){
+     const vs=[];for(const a of[-5,5])for(const b of[-5,5])for(const e of[-5,5])vs.push(rot([c[0]+a,c[1]+b,c[2]+e]));ghost.push(vs);}}
+  faces.sort((a,b)=>a.z-b.z);
+  faces.forEach(f=>{ctx.beginPath();f.q.forEach((p,n)=>n?ctx.lineTo(cx+p[0]*S,cy-p[1]*S):ctx.moveTo(cx+p[0]*S,cy-p[1]*S));ctx.closePath();
+   const g=Math.round(80+150*f.br);ctx.fillStyle=`rgb(${Math.round(g*.45)},${Math.round(g*.62)},${g})`;ctx.fill();ctx.strokeStyle='rgba(20,30,70,.7)';ctx.lineWidth=1;ctx.stroke();});
+  ctx.setLineDash([4,4]);ctx.strokeStyle='rgba(209,52,74,.6)';ghost.forEach(vs=>{const E=[[0,1],[2,3],[4,5],[6,7],[0,2],[1,3],[4,6],[5,7],[0,4],[1,5],[2,6],[3,7]];
+   ctx.beginPath();E.forEach(([a,b])=>{ctx.moveTo(cx+vs[a][0]*S,cy-vs[a][1]*S);ctx.lineTo(cx+vs[b][0]*S,cy-vs[b][1]*S);});ctx.stroke();});ctx.setLineDash([]);}
+ function loop(){if(!d.isConnected)return;if($('#cau',d).checked&&!drag)yaw+=.006;if(d.offsetParent)draw();requestAnimationFrame(loop);}
+ cv.onpointerdown=e=>{drag=[e.clientX,e.clientY];cv.setPointerCapture(e.pointerId);};
+ cv.onpointermove=e=>{if(!drag)return;yaw+=(e.clientX-drag[0])*.01;pitch=Math.max(-1.4,Math.min(1.4,pitch+(e.clientY-drag[1])*.01));drag=[e.clientX,e.clientY];};
+ cv.onpointerup=()=>drag=null;
+ $('#cs',d).oninput=e=>setT(+e.target.value);$('#cdn',d).oninput=()=>setT(t);
+ setTimeout(loop,0);return d;};
+L.tinta=()=>{
+ const d=document.createElement('div');d.className='card';
+ d.innerHTML=`<h3>🎨 Calculadora da questão 12: caixas e latas de tinta</h3><div class="grid2"><div>
+ <table><tr><th></th><th>Pequena</th><th>Média</th></tr>
+ <tr><td>Comprimento (cm)</td><td><input type="number" data-v="15"></td><td><input type="number" data-v="20"></td></tr>
+ <tr><td>Largura (cm)</td><td><input type="number" data-v="20"></td><td><input type="number" data-v="20"></td></tr>
+ <tr><td>Altura (cm)</td><td><input type="number" data-v="5"></td><td><input type="number" data-v="10"></td></tr>
+ <tr><td>Quantidade</td><td><input type="number" data-v="40"></td><td><input type="number" data-v="20"></td></tr></table>
+ <div class="ctrl"><label>Rendimento (m²/L) <input type="number" id="rd" value="2" step="0.5"></label><label>Lata (mL) <input type="number" id="lt" value="900" step="50"></label></div></div>
+ <div><div class="kpi"><div>Área por caixa<b id="a1"></b></div><div>Área total<b id="at"></b></div><div>Tinta exata<b id="tl"></b></div><div>Latas a comprar<b id="lc"></b></div></div>
+ <div class="tip" id="tt"></div></div></div>`;
+ const inp=$$('input[data-v]',d);inp.forEach(i=>i.value=i.dataset.v);
+ const calc=(u)=>{const v=inp.map(i=>+i.value||0),A=(c,l,a)=>2*(c*l+c*a+l*a);const a1=A(v[0],v[2],v[4]),a2=A(v[1],v[3],v[5]);const tot=(a1*v[6]+a2*v[7])/10000;
+  const L=tot/(+$('#rd',d).value||1),lt=(+$('#lt',d).value||900)/1000,lat=Math.ceil(L/lt-1e-9);
+  $('#a1',d).textContent=fmt(a1)+' / '+fmt(a2)+' cm²';$('#at',d).textContent=fmt(tot)+' m²';$('#tl',d).textContent=fmt(L)+' L';$('#lc',d).textContent=lat;
+  $('#tt',d).innerHTML=`Dá <b>${fmt(L/lt)}</b> latas exatas, mas não se compra fração de lata: <b>arredonda-se para cima</b>. O aplicativo calcula; <b>a decisão de arredondar é sua</b> (pergunta 2 do olhar crítico).`;if(u===true&&lat===4&&Math.abs(tot-7)<1e-6)addXP('tinta',10);};
+ d.addEventListener('input',()=>calc(true));calc();return d;};
+
+// ---- Ajuda ou limita
+L.game=()=>{const d=document.createElement('div');d.className='card qz';
+ const S=[['Girar o sólido da questão 11 em 3D facilita ver quais cubos foram retirados.','a','Ajuda: a dificuldade da questão é visualizar o sólido.'],
+ ['O app mostrou 3,9 latas, então comprar 3,9 latas é possível.','l','Limita: a decisão de arredondar para 4 é humana.'],
+ ['Meu celular não tem RA.','l','Limita: nem todo aparelho é compatível. Por isso o plano B existe.'],
+ ['A planilha refaz a conta de 100 casos de uma vez.','a','Ajuda: testar muitos casos rápido é um ponto forte.'],
+ ['Se eu digitar uma medida errada, o app dá uma resposta errada com a mesma confiança.','l','Limita: a ferramenta não sabe o que você quis dizer.'],
+ ['Na RA, dá para comparar o sólido virtual com uma caixa real na mesa.','a','Ajuda: liga o modelo ao objeto concreto.'],
+ ['Na questão 13 (razão entre dois números), a RA deixa a resolução mais clara.','l','Limita: a questão não pede visualização espacial; outra ferramenta serve melhor.'],
+ ['Arrastar vértices no GeoGebra mostra que a semelhança vale em vários triângulos, não só no da figura.','a','Ajuda: a geometria dinâmica generaliza o caso da prova.']];
+ d.innerHTML='<h3>🎮 Ajuda ou limita?</h3><p class="small">Decida para cada situação. Pontue 5 XP por acerto.</p>'+S.map((s,i)=>`<div class="st" data-i="${i}">${s[0]}<div class="bt"><button data-a="a">👍 Ajuda</button><button data-a="l">⚠️ Limita</button></div><div class="fb" style="display:none"></div></div>`).join('')+'<div class="kpi"><div>Acertos<b id="gs">0 / 8</b></div></div>';
+ let ok=0;d.addEventListener('click',e=>{const b=e.target.closest('button[data-a]');if(!b)return;const st=b.closest('.st'),i=+st.dataset.i;if(st.dataset.done)return;st.dataset.done=1;
+  const r=b.dataset.a===S[i][1];if(r){ok++;addXP('g'+i,5);}const f=$('.fb',st);f.style.display='block';f.className='fb '+(r?'ok':'no');f.textContent=(r?'✅ ':'🤔 ')+S[i][2];$('#gs',d).textContent=ok+' / 8';});
+ return d;};
+// ---- bilhete
+L.ticket=()=>{const d=document.createElement('div');d.className='card';d.innerHTML=`<h3>🎟️ Bilhete de saída</h3><p>A ferramenta <input class="tx" style="width:180px;display:inline" data-t="0"> ajuda em <input class="tx" style="width:220px;display:inline" data-t="1">, mas não substitui <input class="tx" style="width:220px;display:inline" data-t="2">.</p><button class="sec" id="tk">Registrar (+10 XP)</button> <span class="small" id="tm"></span>`;
+ const sv=store.get('ticket',[]);$$('input',d).forEach((x,i)=>{x.value=sv[i]||'';x.oninput=()=>store.set('ticket',$$('input',d).map(y=>y.value));});
+ $('#tk',d).onclick=()=>{if($$('input',d).every(x=>x.value.trim())){addXP('ticket',10);$('#tm',d).textContent='Registrado!';}else $('#tm',d).textContent='Complete as 3 lacunas.';};return d;};
+
+// ---- IA: k-vizinhos
+L.knn=()=>{const d=document.createElement('div');d.className='card lab';
+ d.innerHTML=`<h3>🤖 Laboratório de IA: ensine a máquina a separar dois grupos</h3>
+ <p class="small">Clique no quadro para adicionar exemplos. A máquina colore a região usando os <b>k exemplos mais próximos</b> (k-vizinhos), que é uma ideia de distância da Geometria.</p>
+ <canvas width="480" height="380"></canvas>
+ <div class="ctrl"><label>Classe: <select id="kc"><option value="0">🔵 Gato</option><option value="1">🟠 Cachorro</option></select></label><label>k = <select id="kk"><option>1</option><option selected>3</option><option>5</option><option>9</option></select></label>
+ <button class="sec" id="ke">Carregar exemplo</button><button class="sec" id="kn">Adicionar exemplos “enganosos”</button><button class="sec" id="kx">Limpar</button><button class="btn" id="km">Testar ponto misterioso</button></div>
+ <div class="ok" id="kr">Adicione exemplos de cada classe ou use “Carregar exemplo”.</div>
+ <div class="tip"><b>Discuta:</b> (1) A máquina erra mais perto ou longe da fronteira entre os grupos? (2) O que acontece com poucos exemplos? (3) E se os exemplos de uma classe forem todos parecidos entre si? Compare com o <i>Quick, Draw!</i>.</div>`;
+ const cv=$('canvas',d),ctx=cv.getContext('2d'),W=480,H=380;let pts=[],mys=null;
+ const pred=(x,y,k)=>{const o=pts.map(p=>[(p.x-x)**2+(p.y-y)**2,p.c]).sort((a,b)=>a[0]-b[0]).slice(0,k);const v=[0,0];o.forEach(a=>v[a[1]]++);return v;};
+ const col=['47,91,234','232,113,10'];
+ function draw(){ctx.clearRect(0,0,W,H);const k=+$('#kk',d).value;
+  if(pts.length>=2&&pts.some(p=>p.c===0)&&pts.some(p=>p.c===1))for(let x=0;x<W;x+=10)for(let y=0;y<H;y+=10){const v=pred(x+5,y+5,k),n=v[0]+v[1];const c=v[0]>=v[1]?0:1;ctx.fillStyle=`rgba(${col[c]},${.08+.3*Math.abs(v[0]-v[1])/n})`;ctx.fillRect(x,y,10,10);}
+  pts.forEach(p=>{ctx.fillStyle=`rgb(${col[p.c]})`;ctx.beginPath();ctx.arc(p.x,p.y,5,0,7);ctx.fill();ctx.strokeStyle='#fff';ctx.stroke();});
+  if(mys){ctx.strokeStyle='#111';ctx.lineWidth=2;ctx.beginPath();ctx.arc(mys.x,mys.y,9,0,7);ctx.stroke();ctx.fillStyle='#111';ctx.font='bold 14px system-ui';ctx.fillText('?',mys.x-4,mys.y+5);}}
+ cv.onclick=e=>{const r=cv.getBoundingClientRect();pts.push({x:(e.clientX-r.left)*W/r.width,y:(e.clientY-r.top)*H/r.height,c:+$('#kc',d).value});draw();};
+ const jit=(cx,cy,c,n,s)=>{for(let i=0;i<n;i++)pts.push({x:cx+(Math.random()+Math.random()-1)*s,y:cy+(Math.random()+Math.random()-1)*s,c});};
+ $('#ke',d).onclick=()=>{pts=[];mys=null;jit(130,130,0,14,90);jit(350,250,1,14,90);draw();addXP('knn1',5);};
+ $('#kn',d).onclick=()=>{jit(300,120,0,4,30);jit(180,260,1,4,30);draw();};
+ $('#kx',d).onclick=()=>{pts=[];mys=null;draw();$('#kr',d).textContent='Quadro limpo.';};
+ $('#kk',d).onchange=draw;
+ $('#km',d).onclick=()=>{if(!pts.length)return;mys={x:30+Math.random()*(W-60),y:30+Math.random()*(H-60)};const v=pred(mys.x,mys.y,+$('#kk',d).value);draw();
+  $('#kr',d).innerHTML=`Votos dos ${v[0]+v[1]} vizinhos mais próximos: 🔵 ${v[0]} × 🟠 ${v[1]}. A máquina responde <b>${v[0]>=v[1]?'Gato':'Cachorro'}</b>, ${Math.max(v[0],v[1])===v[0]+v[1]?'com unanimidade':'com dúvida'}. Você concorda?`;addXP('knn2',5);};
+ setTimeout(draw,0);return d;};
+
+// ---- vídeo
+L.video=()=>{const d=document.createElement('div');d.className='card';
+ const REQ=[['Definição de IA',1],['Definição de Robótica',1],['Curiosidade',2],['Aplicação real',2],['Limite ou risco',1],['Fontes',1]];
+ d.innerHTML=`<h3>🎬 Planejador do vídeo (2 a 4 minutos)</h3>
+ <div class="ctrl"><label>Tipo <select id="vt">${REQ.map(r=>`<option>${r[0]}</option>`).join('')}</select></label><label>Duração (s) <input type="number" id="vd" value="20"></label><label style="flex:1">Descrição <input class="tx" id="vx" type="text" placeholder="o que aparece e é dito nesta cena"></label><button class="btn" id="va">Adicionar cena</button></div>
+ <div class="chips" id="vc"></div><div id="vl"></div><div class="kpi"><div>Duração total<b id="vs">0:00</b></div><div>Meta<b>2:00 a 4:00</b></div></div>
+ <div class="ctrl"><button class="sec" id="vcp">Copiar roteiro</button><span class="small" id="vm"></span></div>`;
+ let sc=store.get('video',[]);
+ function render(){store.set('video',sc);const c={};sc.forEach(s=>c[s.t]=(c[s.t]||0)+1);
+  $('#vc',d).innerHTML=REQ.map(r=>`<span class="chip ${(c[r[0]]||0)>=r[1]?'on':''}">${(c[r[0]]||0)>=r[1]?'✔':'○'} ${r[0]} (${c[r[0]]||0}/${r[1]})</span>`).join('');
+  $('#vl',d).innerHTML=sc.map((s,i)=>`<div class="sc"><b>${i+1}</b><span class="ty">${s.t}</span><span>${s.d||''}</span><span class="small" style="margin-left:auto">${s.s}s</span><button class="sec" data-x="${i}">×</button></div>`).join('')||'<p class="small">Nenhuma cena ainda.</p>';
+  const tot=sc.reduce((a,s)=>a+s.s,0);$('#vs',d).textContent=Math.floor(tot/60)+':'+String(tot%60).padStart(2,'0');
+  if(REQ.every(r=>(c[r[0]]||0)>=r[1])&&tot>=120&&tot<=240)addXP('video',20);}
+ $('#va',d).onclick=()=>{sc.push({t:$('#vt',d).value,s:Math.max(1,+$('#vd',d).value||10),d:$('#vx',d).value});$('#vx',d).value='';render();};
+ d.addEventListener('click',e=>{const b=e.target.closest('[data-x]');if(b){sc.splice(+b.dataset.x,1);render();}});
+ $('#vcp',d).onclick=()=>{const t=sc.map((s,i)=>`${i+1}. [${s.t}] ${s.d} (${s.s}s)`).join('\n');const ok=()=>$('#vm',d).textContent='Copiado!';
+  if(navigator.clipboard)navigator.clipboard.writeText(t).then(ok,ok);else ok();};
+ render();return d;};
+
+ENC.forEach(e=>{const host=$('#labs'+e.n);e.blocks.forEach(b=>{if(b.lab){host.appendChild(L[b.lab]());if(b.lab==='cube')host.appendChild(L.tinta());}});});
+</script>
+</body>
+</html>
